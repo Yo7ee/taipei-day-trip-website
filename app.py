@@ -26,22 +26,29 @@ def page():
 		host=config.mysql["host"],
 		user=config.mysql["user"],
 		password=config.mysql["password"],
-		database="taipeiAttraction"
-) 	
+		database="taipeiAttraction",
+	) 	
 	keyword=request.args.get("keyword")
 	pageList=[]
 	# print(type(getData)) #資料型態list
 	page=request.args.get("page", default=0) #request.args.get得到的值為str, 為了計算使用int，轉換為int	
 	page=int(page)
 	x=page*12
+	mycursor=mydb.cursor()
+
 	try:
 		if(keyword==None):
 			mycursor=mydb.cursor()
 			mycursor.execute("SELECT * FROM attraction LIMIT %s,12",(x,))
 			getData=mycursor.fetchall()
+			if(len(getData) % 12 ==0):
+				page=page+1
+			else:
+				page=None
+				
 			print(range(len(getData)))
 			for j in range(len(getData)):
-				result={"nextPage":page+1, 
+				result={"nextPage":page, 
 				"data":
 				{"id":getData[j][0], 
 				"name":getData[j][1],
@@ -61,8 +68,13 @@ def page():
 			mycursor=mydb.cursor()
 			mycursor.execute("SELECT * FROM attraction WHERE name LIKE %s LIMIT %s,12",(keyword, x,))
 			getData=mycursor.fetchall()
+			if(len(getData) % 12 ==0):
+				page=page+1
+			else:
+				page=None
+
 			for j in range(len(getData)):
-				result={"nextPage":page+1, 
+				result={"nextPage":page, 
 				"data":
 				{"id":getData[j][0], 
 				"name":getData[j][1],
@@ -92,7 +104,7 @@ def attractionId(id):
 		user=config.mysql["user"],
 		password=config.mysql["password"],
 		database="taipeiAttraction"
-) 	
+	) 	
 	try:
 		mycursor=mydb.cursor()
 		mycursor.execute("SELECT * FROM attraction WHERE id= %s",(id,))
