@@ -76,7 +76,6 @@ def page():
 				}}
 				pageList.append(result)
 			pageList.append(result1)
-			# pageList.update(nextPage)
 			return jsonify(pageList)
 		elif(type(keyword)==str):
 			keyword='%'+keyword+'%' #模糊查詢結構
@@ -88,6 +87,7 @@ def page():
 			else:
 				page=None
 			i=len(getData)-1
+
 			result1={"nextPage":page,
 				"Data":{
 				"id":getData[i][0], 
@@ -101,7 +101,7 @@ def page():
 				"longitude":getData[i][8],
 				"images":getData[i][9].split(","),#處理圖片位址str to list
 				}}
-			for j in range(len(getData-2)):
+			for j in range(len(getData)-2):
 				result={
 				"data":
 				{"id":getData[j][0], 
