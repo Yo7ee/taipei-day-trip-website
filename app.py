@@ -87,9 +87,22 @@ def page():
 				page=page+1
 			else:
 				page=None
-
-			for j in range(len(getData)):
-				result={"nextPage":page, 
+			i=len(getData)-1
+			result1={"nextPage":page,
+				"Data":{
+				"id":getData[i][0], 
+				"name":getData[i][1],
+				"category":getData[i][2],
+				"description":getData[i][3],
+				"address":getData[i][4],
+				"transport":getData[i][5],
+				"mrt":getData[i][6],
+				"latitude":getData[i][7],
+				"longitude":getData[i][8],
+				"images":getData[i][9].split(","),#處理圖片位址str to list
+				}}
+			for j in range(len(getData-2)):
+				result={
 				"data":
 				{"id":getData[j][0], 
 				"name":getData[j][1],
@@ -103,6 +116,7 @@ def page():
 				"images":getData[j][9].split(","),#處理圖片位址str to list
 				}}
 				pageList.append(result)
+			pageList.append(result1)
 			return jsonify(pageList)
 	except:
 		errorMes={
