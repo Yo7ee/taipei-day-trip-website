@@ -29,13 +29,13 @@ def page():
 		database="taipeiAttraction",
 	) 	
 	keyword=request.args.get("keyword")
-	pageList=[]
+
 	# print(type(getData)) #資料型態list
 	page=request.args.get("page", default=0) #request.args.get得到的值為str, 為了計算使用int，轉換為int	
 	page=int(page)
 	x=page*12
 	mycursor=mydb.cursor()
-
+	pageList=[]
 	try:
 		if(keyword==None):
 			mycursor=mydb.cursor()
@@ -44,13 +44,26 @@ def page():
 			if(len(getData) % 12 ==0):
 				page=page+1
 			else:
-				page=None
-				
-			print(range(len(getData)))
-			for j in range(len(getData)):
-				result={"nextPage":page, 
-				"data":
-				{"id":getData[j][0], 
+				page=None			
+			# print(range(len(getData)))
+			i=len(getData)-1
+			result1={"nextPage":page,
+				"Data":{
+				"id":getData[i][0], 
+				"name":getData[i][1],
+				"category":getData[i][2],
+				"description":getData[i][3],
+				"address":getData[i][4],
+				"transport":getData[i][5],
+				"mrt":getData[i][6],
+				"latitude":getData[i][7],
+				"longitude":getData[i][8],
+				"images":getData[i][9].split(","),#處理圖片位址str to list
+				}}
+			for j in range(len(getData)-2):
+				result={
+				"Data":{
+				"id":getData[j][0], 
 				"name":getData[j][1],
 				"category":getData[j][2],
 				"description":getData[j][3],
@@ -62,6 +75,8 @@ def page():
 				"images":getData[j][9].split(","),#處理圖片位址str to list
 				}}
 				pageList.append(result)
+			pageList.append(result1)
+			# pageList.update(nextPage)
 			return jsonify(pageList)
 		elif(type(keyword)==str):
 			keyword='%'+keyword+'%' #模糊查詢結構
