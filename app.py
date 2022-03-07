@@ -46,23 +46,8 @@ def page():
 			else:
 				page=None			
 			# print(range(len(getData)))
-			i=len(getData)-1
-			result1={"nextPage":page,
-				"Data":{
-				"id":getData[i][0], 
-				"name":getData[i][1],
-				"category":getData[i][2],
-				"description":getData[i][3],
-				"address":getData[i][4],
-				"transport":getData[i][5],
-				"mrt":getData[i][6],
-				"latitude":getData[i][7],
-				"longitude":getData[i][8],
-				"images":getData[i][9].split(","),#處理圖片位址str to list
-				}}
-			for j in range(len(getData)-2):
+			for j in range(len(getData)):
 				result={
-				"Data":{
 				"id":getData[j][0], 
 				"name":getData[j][1],
 				"category":getData[j][2],
@@ -73,10 +58,10 @@ def page():
 				"latitude":getData[j][7],
 				"longitude":getData[j][8],
 				"images":getData[j][9].split(","),#處理圖片位址str to list
-				}}
+				}
 				pageList.append(result)
-			pageList.append(result1)
-			return jsonify(pageList)
+			result={"nextPage":page,"data":pageList}
+			return jsonify(result)
 		elif(type(keyword)==str):
 			keyword='%'+keyword+'%' #模糊查詢結構
 			mycursor=mydb.cursor()
@@ -86,25 +71,9 @@ def page():
 				page=page+1
 			else:
 				page=None
-			i=len(getData)-1
-
-			result1={"nextPage":page,
-				"Data":{
-				"id":getData[i][0], 
-				"name":getData[i][1],
-				"category":getData[i][2],
-				"description":getData[i][3],
-				"address":getData[i][4],
-				"transport":getData[i][5],
-				"mrt":getData[i][6],
-				"latitude":getData[i][7],
-				"longitude":getData[i][8],
-				"images":getData[i][9].split(","),#處理圖片位址str to list
-				}}
-			for j in range(len(getData)-2):
+			for j in range(len(getData)):
 				result={
-				"data":
-				{"id":getData[j][0], 
+				"id":getData[j][0], 
 				"name":getData[j][1],
 				"category":getData[j][2],
 				"description":getData[j][3],
@@ -114,10 +83,10 @@ def page():
 				"latitude":getData[j][7],
 				"longitude":getData[j][8],
 				"images":getData[j][9].split(","),#處理圖片位址str to list
-				}}
+				}
 				pageList.append(result)
-			pageList.append(result1)
-			return jsonify(pageList)
+			result={"nextPage":page,"data":pageList}
+			return jsonify(result)
 	except:
 		errorMes={
 			"error":True,
