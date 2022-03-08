@@ -40,6 +40,7 @@ section{
     width:100%; /*讓這個區塊隨著螢幕變化而變化*/
     display: flex;
     justify-content: center;
+    margin-bottom: 2.5rem;;
 }
 main{
     width:60rem;
@@ -62,10 +63,9 @@ p{
 }
 .searchbar{
     display: flex;
-    border-radius: ;
 }
 input{
-    height:2rem;
+    height:2.3rem;
     width:20rem;
     border-radius: 0.25rem 0 0 0.25rem;
 }
@@ -85,24 +85,33 @@ button{
     border: solid red;
 } 
 article{
-    width:16rem;
+    width:60rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin:0 auto;
 }
 figure{
+    margin-right: 1.45rem;;
+    margin-bottom: 1.5rem;
+    border:1px solid #E8E8E8;
+    border-radius: 0.25rem;
+    width:13.4rem;
 
 }
 img{
-    width:14rem;
+    width:13.4rem;
     height:13rem;
 }
-.figcaption1{
+figcaption{
+    padding:0.5rem;
+    width:13.4rem;
+}
+.name{
     color:#757575;
     font-weight: bold;
 }
-.figcaption2{
+.figcaption1{
     display:flex;/*讓交通與分類並排*/
     justify-content: space-between;
     color:#757575;
