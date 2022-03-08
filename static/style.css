@@ -8,9 +8,12 @@ html{
     font-family: 'Noto Sans TC', sans-serif;
 }
 header{
+    background:white;
+    width:100%;
     display:flex;
     justify-content: center;
-    position:sticky;
+    position:fixed; /*將其固定在距離top:0的位置*/
+    top:0; 
 }
 .header{
     width:60rem;
@@ -83,23 +86,25 @@ button{
 } 
 article{
     width:16rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin:0 auto;
 }
 figure{
-    display:flex;/*讓景點名稱與交通並排*/
-    flex-flow:column;
+
 }
 img{
     width:14rem;
     height:13rem;
-}
-figcaption{
-    display:flex;/*讓交通與分類並排*/
 }
 .figcaption1{
     color:#757575;
     font-weight: bold;
 }
 .figcaption2{
+    display:flex;/*讓交通與分類並排*/
+    justify-content: space-between;
     color:#757575;
 }
 footer{
@@ -115,9 +120,18 @@ footer{
 }
 
 /* 平板自由發揮 */
-/* @media (min-width:600px) and (max-width:1200px) {
-    
-} */
+@media (min-width:600px) and (max-width:1200px) {
+    article{
+        width:90%;
+    }
+    figure{
+        width:45%;
+    }
+    img{
+        width:100%;
+        object-fit: cover;
+    }
+}
 @media (min-width:360px) and (max-width:600px){
     section{
         height:14rem;
@@ -139,4 +153,14 @@ footer{
     .welcome{
         display:none;
     } 
+    article{
+        width:90%;
+    }
+    figure{
+        width:90%;
+    }
+    img{
+        width:100%;
+        object-fit: cover;
+    }
 }
