@@ -1,0 +1,142 @@
+*{
+    margin:0;
+    padding:0;
+    border:0;
+}
+html{
+    font-size: 20px;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+header{
+    display:flex;
+    justify-content: center;
+    position:sticky;
+}
+.header{
+    width:60rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+h1{
+    color:#448899;
+    font-size: 1.5rem;
+}
+ul{
+    list-style:none;
+    display:flex; /* 讓下一個層次將item1-2水平排列 */
+    color:#666666;
+    font-size: 0.8rem ;
+}
+li{
+    margin-left: 1rem;
+}
+section{
+    background:linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+    height:16rem;
+    width:100%; /*讓這個區塊隨著螢幕變化而變化*/
+    display: flex;
+    justify-content: center;
+}
+main{
+    width:60rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+h2{
+    font-style: normal;
+    font-size: 1.4rem;
+    color:#F8F8F8;
+    margin-bottom: 0.75rem;
+}
+p{
+    font-style: normal;
+    font-size: 0.8rem;
+    color:#F8F8F8;
+    margin-bottom: 1.25rem;
+}
+.searchbar{
+    display: flex;
+    border-radius: ;
+}
+input{
+    height:2rem;
+    width:20rem;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+.search{
+    width:1.5rem;
+    height:1.5rem;
+}
+button{
+    height:2.3rem; 
+    width:3rem;
+    background:#448899;
+    border-radius: 0 10% 10% 0;
+}
+.welcome{
+    width:32.5rem;
+    height:16rem;
+    border: solid red;
+} 
+article{
+    width:16rem;
+}
+figure{
+    display:flex;/*讓景點名稱與交通並排*/
+    flex-flow:column;
+}
+img{
+    width:14rem;
+    height:13rem;
+}
+figcaption{
+    display:flex;/*讓交通與分類並排*/
+}
+.figcaption1{
+    color:#757575;
+    font-weight: bold;
+}
+.figcaption2{
+    color:#757575;
+}
+footer{
+    background: #757575;
+    color:#FFFFFF;
+    width:100%;
+    height:5.2rem;
+    position: fixed;
+    bottom: 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 平板自由發揮 */
+/* @media (min-width:600px) and (max-width:1200px) {
+    
+} */
+@media (min-width:360px) and (max-width:600px){
+    section{
+        height:14rem;
+    }
+    main{
+        background:url("/static/welcome\ 1.png");
+        background-position: right bottom;
+        background-size: 70%;
+        background-repeat: no-repeat;
+        justify-content: center;
+    }
+    input{
+        height:2.3rem;
+        width:11.5rem;
+    }
+    .textcontent{
+        text-align: center;
+    }
+    .welcome{
+        display:none;
+    } 
+}
