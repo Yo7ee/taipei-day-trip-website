@@ -47,6 +47,10 @@ main{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background:url("/static/welcome\ 1.png");
+    background-position: right bottom;
+    background-size: 50%;
+    background-repeat: no-repeat;
 }
 
 h2{
@@ -79,10 +83,7 @@ button{
     background:#448899;
     border-radius: 0 10% 10% 0;
 }
-.welcome{
-    width:32.5rem;
-    height:16rem;
-} 
+
 article{
     width:60rem;
     display: flex;
@@ -115,6 +116,11 @@ figcaption{
     justify-content: space-between;
     color:#757575;
 }
+.noResult{
+    color:#757575;
+    text-align: center;
+    margin-bottom: 2rem;
+}
 footer{
     background: #757575;
     color:#FFFFFF;
@@ -127,24 +133,15 @@ footer{
 
 /* 平板自由發揮 */
 @media (min-width:600px) and (max-width:1200px) {
-    .welcome{
-        width:100%;
-        object-fit: cover;
-    }
     main{
         position:relative;
     }
     .textcontent{
-        width: 45%;
+        width: 48%;
         position: absolute;
         left:4rem;
         z-index: 100;
     } 
-    .piccontent{
-        width: 45%;
-        position: absolute;
-        right:4rem;
-    }
     article{
         width:90%;
     }
@@ -170,10 +167,7 @@ footer{
         height:14rem;
     }
     main{
-        background:url("/static/welcome\ 1.png");
-        background-position: right bottom;
         background-size: 70%;
-        background-repeat: no-repeat;
         justify-content: center;
     }
     input{
@@ -183,9 +177,6 @@ footer{
     .textcontent{
         text-align: center;
     }
-    .welcome{
-        display:none;
-    } 
     article{
         width:90%;
     }
