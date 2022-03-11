@@ -31,7 +31,7 @@ def page():
 	keyword=request.args.get("keyword")
 
 	# print(type(getData)) #資料型態list
-	page=request.args.get("page", default=0) #request.args.get得到的值為str, 為了計算使用int，轉換為int	
+	page=request.args.get("page") #request.args.get得到的值為str, 為了計算使用int，轉換為int	
 	page=int(page)
 	x=page*12
 	mycursor=mydb.cursor()
@@ -41,7 +41,7 @@ def page():
 			mycursor=mydb.cursor()
 			mycursor.execute("SELECT * FROM attraction LIMIT %s,12",(x,))
 			getData=mycursor.fetchall()
-			if(len(getData) % 12 ==0):
+			if(len(getData) % 12 ==0 and len(getData)!=0): #當資料小於12或是沒有資料時，nextPage=null
 				page=page+1
 			else:
 				page=None			
@@ -67,7 +67,7 @@ def page():
 			mycursor=mydb.cursor()
 			mycursor.execute("SELECT * FROM attraction WHERE name LIKE %s LIMIT %s,12",(keyword, x,))
 			getData=mycursor.fetchall()
-			if(len(getData) % 12 ==0):
+			if(len(getData) % 12 ==0 and len(getData)!=0):
 				page=page+1
 			else:
 				page=None
@@ -135,4 +135,4 @@ def attractionId(id):
 		}
 		return jsonify(errorMes)
 
-app.run(host='0.0.0.0', port=3000)
+app.run(host='0.0.0.0', port=3000, debug=True)

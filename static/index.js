@@ -1,7 +1,6 @@
 let article=document.querySelector('article');
 let nextPage=0;
-let src="http://192.168.0.102:3000/api/attractions/?page="+nextPage;
-
+let src="http://3.224.188.5:3000/api/attractions/?page="+nextPage;
 
 const data = 
 fetch(src, {method:'get'}).then(function(response){
@@ -39,17 +38,15 @@ data.then(function(jsonobj){
     };
 });
 
-
-
-//判斷當使用者螢幕高度足夠，導致無捲軸可觸發scrollLoadmore
-//問題:window.event('load')會在fetch資料載入完畢前就觸發
+// 判斷當使用者螢幕高度足夠，導致無捲軸可觸發scrollLoadmore
+// 問題:window.event('load')會在fetch資料載入完畢前就觸發
 // window.addEventListener('load',noscroll)
-// await function noscroll(){
+// function noscroll(){
 //     let bodyHeight=document.body.scrollHeight; //畫面比例調到最小時，整個頁面的高度
 //     let scrollClient=document.documentElement.clientHeight; //正常比例下，頁面的高度
 //     let nextPage=1;
 //     console.log("noscoll scrollClient"+scrollClient+" bodyHeight"+bodyHeight)
-//     if(bodyHeight=scrollClient ){
+//     if(bodyHeight=scrollClient){
 //         let keyword=document.querySelector("input").value;
 //         let freshSrc="http://192.168.0.102:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
 //             const refreshData=
@@ -85,7 +82,8 @@ data.then(function(jsonobj){
 //             });
 //     };
 // };
-// noscroll();
+
+
 //當使用者執行滾軸轉動至底底部時，載入更多資料
 window.addEventListener("scroll",scrollLoadMore);
 function scrollLoadMore(){
@@ -98,7 +96,7 @@ function scrollLoadMore(){
     if(scrollHeight-scrollTop==scrollClient && document.readyState== "complete"){
         console.log("check scroll down and complete load")
         let keyword=document.querySelector("input").value;
-        let freshSrc="http://192.168.0.102:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
+        let freshSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
         if (typeof(nextPage)=="number"){
             const refreshData=
             fetch(freshSrc, {method:'get'}).then(function(response){
@@ -141,7 +139,7 @@ function scrollLoadMore(){
 function searchKeyword(){
     let keyword=document.querySelector("input").value
     let nextPage=0;
-    let keywordSrc="http://192.168.0.102:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
+    let keywordSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
     let checkD=document.querySelector('.result')
     const searchData=fetch(keywordSrc).then(function(response){
         return response.json();
@@ -209,7 +207,7 @@ function searchKeyword(){
         if(scrollHeight-scrollTop==scrollClient && document.readyState== "complete"){
             console.log("check scroll down and complete load")
             let keyword=document.querySelector("input").value;
-            let freshSrc="http://192.168.0.102:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
+            let freshSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
             if (typeof(nextPage)=="number"){
                 const refreshData=
                 fetch(freshSrc, {method:'get'}).then(function(response){
