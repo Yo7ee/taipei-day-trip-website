@@ -93,7 +93,7 @@ function scrollLoadMore(){
     let scrollClient=document.documentElement.clientHeight; //正常比例下，頁面的高度
     console.log("scroll check: scrollClient"+scrollClient+" scrollHeight"+scrollHeight+" scrollTop"+scrollTop);
     //此方法可能會有問題，如果scrolltop非整數時
-    if(scrollHeight-scrollTop==scrollClient && document.readyState== "complete"){
+    if(scrollHeight-scrollTop==scrollClient){
         console.log("check scroll down and complete load")
         let keyword=document.querySelector("input").value;
         let freshSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
@@ -204,7 +204,7 @@ function searchKeyword(){
         let scrollClient=document.documentElement.clientHeight; //正常比例下，頁面的高度
         console.log("scroll check: scrollClient"+scrollClient+" scrollHeight"+scrollHeight+" scrollTop"+scrollTop);
         //此方法可能會有問題，如果scrolltop非整數時
-        if(scrollHeight-scrollTop==scrollClient && document.readyState== "complete"){
+        if(scrollHeight-scrollTop==scrollClient){
             console.log("check scroll down and complete load")
             let keyword=document.querySelector("input").value;
             let freshSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
