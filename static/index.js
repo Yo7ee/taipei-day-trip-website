@@ -1,6 +1,6 @@
 let article=document.querySelector('article');
 let nextPage=0;
-let src="http://3.224.188.5:3000/api/attractions/?page="+nextPage;
+let src="/api/attractions/?page="+nextPage;
 
 const data = 
 fetch(src, {method:'get'}).then(function(response){
@@ -96,7 +96,7 @@ function scrollLoadMore(){
     if(scrollHeight-scrollTop==scrollClient){
         console.log("check scroll down and complete load")
         let keyword=document.querySelector("input").value;
-        let freshSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
+        let freshSrc="/api/attractions/?page="+nextPage+"&keyword="+keyword;
         if (typeof(nextPage)=="number"){
             const refreshData=
             fetch(freshSrc, {method:'get'}).then(function(response){
@@ -139,7 +139,7 @@ function scrollLoadMore(){
 function searchKeyword(){
     let keyword=document.querySelector("input").value
     let nextPage=0;
-    let keywordSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
+    let keywordSrc="/api/attractions/?page="+nextPage+"&keyword="+keyword;
     let checkD=document.querySelector('.result')
     const searchData=fetch(keywordSrc).then(function(response){
         return response.json();
@@ -207,7 +207,7 @@ function searchKeyword(){
         if(scrollHeight-scrollTop==scrollClient){
             console.log("check scroll down and complete load")
             let keyword=document.querySelector("input").value;
-            let freshSrc="http://3.224.188.5:3000/api/attractions/?page="+nextPage+"&keyword="+keyword;
+            let freshSrc="/api/attractions/?page="+nextPage+"&keyword="+keyword;
             if (typeof(nextPage)=="number"){
                 const refreshData=
                 fetch(freshSrc, {method:'get'}).then(function(response){
