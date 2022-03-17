@@ -1,0 +1,245 @@
+*{
+    margin:0;
+    padding:0;
+    border:0;
+}
+html{
+    font-size: 20px;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+header{
+    display:flex;
+    justify-content: center;
+    position:fixed;
+    top:0;
+    border-bottom: 1px solid #E8E8E8;
+    background-color: #FFFFFF;
+    width:100%;
+}
+.header{
+    width:60rem;
+    height:2.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+h1{
+    color:#448899;
+    font-size: 1.5rem;
+}
+ul{
+    list-style:none;
+    display:flex; /* 讓下一個層次將item1-2水平排列 */
+    color:#666666;
+    font-size: 0.8rem ;
+}
+li{
+    margin-left: 1rem;
+}
+section{
+    width:60rem;
+    margin:0 auto;
+    color:#666666;
+    display: flex;
+    margin-top: 3rem;
+    justify-content: space-around;
+    align-items: center;
+}
+.rightArrow{
+    top: -9rem;
+    right:0.8rem;
+    position: relative;
+    height:1.8rem;
+
+}
+.leftArrow{
+    position:relative;
+    top:-9rem;
+    left:0.8rem;
+    height:1.8rem;
+}
+.imgContainer{
+    width:27rem;
+    height:20.3rem;
+    display:flex;
+    flex-flow: column;
+    justify-items:center;
+}
+.image, .img{
+    width:27rem;
+    height:20.3rem;
+}
+.icon{
+    width:100%;
+    display:flex;
+    justify-content: center;
+    position:relative;
+    top:-1rem;
+}
+.dotContainer{
+    width:90%;
+    justify-content: center;
+}
+.dot{
+    width:0.6rem;
+    height:0.6rem;
+    border-radius: 50%;
+    background:white;
+}
+.selected{
+    width:0.4rem;
+    height:0.4rem;
+    border-radius: 50%;
+    border:white solid 0.1rem;
+    background:black;
+}
+.content{
+    width:30rem;
+}
+.name{
+    padding-bottom: 0.75rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.category{
+    font-size: 0.8rem;
+    display:inline;
+}
+.mrt{
+    display:inline;
+    font-size: 0.8rem;
+}
+.booking{
+    display:flex;
+    flex-flow:column;
+    justify-content: center;
+    background: #E8E8E8;
+    width:30rem;
+    height:15rem;
+    font-size: 0.8rem;
+    padding-left: 1rem;;
+    margin-top: 1rem;
+    border-radius: 0.25rem;
+}
+.booking_1{
+    padding-bottom: 0.75rem;
+    font-weight: bold;
+}
+.booking_2{
+    padding-bottom: 1.2rem;
+}
+.booking_3{
+    display: flex;
+    font-weight: bold;
+}
+.booking_4{
+    padding-bottom: 1.25rem;
+    padding-top: 1.2rem;
+    font-weight: bold;
+}
+.booking_5{
+    padding-bottom: 1.25rem;
+    font-weight: bold;
+    display:flex;
+}
+.booking_6{
+    background-color: #448899;
+    color:#FFFFFF;
+    width:8rem;
+    height:1.2rem;
+    border-radius: 0.25rem;
+}
+.option,.option1,.option2{
+    font-weight: normal;
+}
+.option2{
+    display:none;
+}
+.option1{
+    display:block;
+}
+article{
+    margin:0 auto;
+    width:60rem;
+    color:#666666;
+}
+.p_description{
+    border-top:1px solid #E8E8E8;
+    padding-top: 2.5rem;
+    margin-top: 1.5rem;
+}
+span{
+    display:block;
+    padding-top: 1rem;
+    font-weight: bold;
+}
+footer{
+    background: #757575;
+    color:#FFFFFF;
+    width:100%;
+    height:5.2rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:6rem;
+}
+
+/* 平板自由發揮 */
+@media (min-width:600px) and (max-width:1200px) {
+    .header{
+        width:90%;
+    }
+    section{
+        width:90%;
+        margin-top: 2.5rem;
+        justify-content: space-evenly;
+    }
+    .imgContainer{
+        width:45%;
+        margin-top: 0;
+    }
+    .img{
+        width:100%;
+    }
+    .image{
+        width:100%;
+    }
+    .booking{
+        width:90%;
+    }
+    .content{
+        width:45%;
+    }
+    article{
+        width:95%;
+        margin:auto 0.5rem auto 1rem;
+    }
+}
+@media (min-width:360px) and (max-width:600px){
+    .header{
+        width:90%;
+    }
+    section{
+        width:100%;
+        flex-flow:wrap;
+        margin-top: 2rem;
+    }
+    .img{
+        width:100%;
+    }
+    .image{
+        width:100%;
+    }
+    .content{
+        width:95%;
+        margin-top: 1rem;
+    }
+    .booking{
+        width:95%;
+        margin-bottom: 1rem;
+    }
+    article{
+        width: 95%;
+        margin:auto 1rem auto 0.5rem;
+    }
+}
