@@ -91,6 +91,9 @@ article{
     justify-content: center;
     margin:0 auto;
 }
+a{
+    text-decoration: none;
+}
 figure{
     margin-right: 1.45rem;;
     margin-bottom: 1.5rem;

@@ -6,6 +6,7 @@ const data =
 fetch(src, {method:'get'}).then(function(response){
     return response.json();
 });
+console.log(data)
 
 data.then(function(jsonobj){
     console.log(jsonobj)
@@ -14,6 +15,9 @@ data.then(function(jsonobj){
     for (let i=0; i<12; i++){
     let list=jsonobj.data;
     let myfigure=document.createElement('figure');
+    let a=document.createElement('a')
+    let id=list[i].id;
+    a.href='/attraction/'+id
     let myimg=document.createElement('img');
     let myfigcaption=document.createElement('figcaption');
     let divName=document.createElement('div');
@@ -34,7 +38,8 @@ data.then(function(jsonobj){
     myfigcaption.appendChild(divFig1);
     myfigure.appendChild(myimg);
     myfigure.appendChild(myfigcaption);
-    article.appendChild(myfigure);
+    a.appendChild(myfigure)
+    article.appendChild(a);
     };
 });
 
@@ -108,6 +113,9 @@ function scrollLoadMore(){
                 for (let i=0; i<jsonobj.data.length; i++){
                 let list=jsonobj.data;
                 let myfigure=document.createElement('figure');
+                let a=document.createElement('a')
+                let id=list[i].id;
+                a.href='/attraction/'+id
                 let myimg=document.createElement('img');
                 let myfigcaption=document.createElement('figcaption');
                 let divName=document.createElement('div');
@@ -128,7 +136,8 @@ function scrollLoadMore(){
                 myfigcaption.appendChild(divFig1);
                 myfigure.appendChild(myimg);
                 myfigure.appendChild(myfigcaption);
-                article.appendChild(myfigure);
+                a.appendChild(myfigure);
+                article.appendChild(a);
                 };
             });
         }else{return window.event=false};//如果不行，改試return document.event.returnValue=false，此為終止已經被觸發的document事件
@@ -160,6 +169,9 @@ function searchKeyword(){
             for(i=0; i<list.length; i++){
             let list=jsonobj.data;
             let myfigure=document.createElement('figure');
+            let a=document.createElement('a')
+            let id=list[i].id;
+            a.href='/attraction/'+id
             let myimg=document.createElement('img');
             let myfigcaption=document.createElement('figcaption');
             let divName=document.createElement('div');
@@ -180,7 +192,8 @@ function searchKeyword(){
             myfigcaption.appendChild(divFig1);
             myfigure.appendChild(myimg);
             myfigure.appendChild(myfigcaption);
-            article.appendChild(myfigure);
+            a.appendChild(myfigure)
+            article.appendChild(a);
             };
         }else if(checkD==null || keyword==null){
             let div=document.querySelector('.noResult');
@@ -219,6 +232,9 @@ function searchKeyword(){
                     for (let i=0; i<jsonobj.data.length; i++){
                     let list=jsonobj.data;
                     let myfigure=document.createElement('figure');
+                    let a=document.createElement('a')
+                    let id=list[i].id;
+                    a.href='/attraction/'+id
                     let myimg=document.createElement('img');
                     let myfigcaption=document.createElement('figcaption');
                     let divName=document.createElement('div');
@@ -239,7 +255,8 @@ function searchKeyword(){
                     myfigcaption.appendChild(divFig1);
                     myfigure.appendChild(myimg);
                     myfigure.appendChild(myfigcaption);
-                    article.appendChild(myfigure);
+                    a.appendChild(myfigure)
+                    article.appendChild(a);
                     };
                 });
             }else{return window.event=false};//如果不行，改試return document.event.returnValue=false，此為終止已經被觸發的document事件
