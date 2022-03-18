@@ -89,9 +89,18 @@ data.then(function(refreshData){
 // };
 
 
-//當使用者執行滾軸轉動至底底部時，載入更多資料
-window.addEventListener("scroll",scrollLoadMore);
-setTimeout(scrollLoadMore, 5000)
+//當使用者執行滾軸轉動至底底部時，載入更多資料，使用throttle讓fetch不會在還沒執行完畢就又被觸發
+let throttleTimer;
+function throttle(callback, time){
+    if (throttleTimer) return;
+    throttleTimer = true;
+    setTimeout(() => {
+        callback();
+        throttleTimer = false;
+    }, time);
+};
+
+window.addEventListener("scroll",() => {throttle(scrollLoadMore,250);});
 async function scrollLoadMore(){
     console.log("first"+nextPage)
     let scrollTop=document.documentElement.scrollTop; //把畫面scroll多少距離消失在螢幕
