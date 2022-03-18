@@ -90,7 +90,8 @@ data.then(function(refreshData){
 
 
 //當使用者執行滾軸轉動至底底部時，載入更多資料
-window.addEventListener("scroll",scrollLoadMore);
+setTimeout(window.addEventListener("scroll",scrollLoadMore), 1000);
+
 async function scrollLoadMore(){
     console.log("first"+nextPage)
     let scrollTop=document.documentElement.scrollTop; //把畫面scroll多少距離消失在螢幕
