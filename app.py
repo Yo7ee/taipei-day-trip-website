@@ -1,6 +1,10 @@
 from flask import *
 import mysql.connector
 import data.config as config
+#For coonnection pool
+from mysql.connector import pooling
+pool=pooling.MySQLConnectionPool
+
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -19,17 +23,29 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
+#connect pooling
+connectionPool=pool(
+	pool_name="mysqlpool",
+	pool_size=10,
+	pool_reset_session=True,#reset session varialbes when the connection is returned to the pool
+	host=config.mysql["host"],
+	user=config.mysql["user"],
+	password=config.mysql["password"],
+	database="taipeiAttraction",
+	)
+
+
 @app.route("/api/attractions/", methods=["GET"])
 def page():
 	#連線資料庫
-	mydb=mysql.connector.connect(
-		host=config.mysql["host"],
-		user=config.mysql["user"],
-		password=config.mysql["password"],
-		database="taipeiAttraction",
-	) 	
+	# mydb=mysql.connector.connect(
+	# 	host=config.mysql["host"],
+	# 	user=config.mysql["user"],
+	# 	password=config.mysql["password"],
+	# 	database="taipeiAttraction",
+	# )
+	mydb=connectionPool.get_connection()
 	keyword=request.args.get("keyword")
-
 	# print(type(getData)) #資料型態list
 	page=request.args.get("page") #request.args.get得到的值為str, 為了計算使用int，轉換為int	
 	page=int(page)
@@ -93,16 +109,22 @@ def page():
 			"message":"伺服器內部錯誤"
 		}
 		return jsonify(errorMes)
-		
+	finally:
+		if mydb.is_connected():
+			mycursor.close()
+			mydb.close()
+			print("mybd connection is closed")
+
 @app.route("/api/attraction/<id>", methods=["GET"])
 def attractionId(id):
 	#連線資料庫
-	mydb=mysql.connector.connect(
-		host=config.mysql["host"],
-		user=config.mysql["user"],
-		password=config.mysql["password"],
-		database="taipeiAttraction"
-	) 	
+	# mydb=mysql.connector.connect(
+	# 	host=config.mysql["host"],
+	# 	user=config.mysql["user"],
+	# 	password=config.mysql["password"],
+	# 	database="taipeiAttraction"
+	# )
+	mydb=connectionPool.get_connection() 	
 	try:
 		mycursor=mydb.cursor()
 		mycursor.execute("SELECT * FROM attraction WHERE id= %s",(id,))
@@ -134,5 +156,10 @@ def attractionId(id):
 			"message":"伺服器內部錯誤"
 		}
 		return jsonify(errorMes)
+	finally:
+		if mydb.is_connected():
+			mycursor.close()
+			mydb.close()
+			print("mybd connection is closed")
 
 app.run(host='0.0.0.0', port=3000, debug=True)
