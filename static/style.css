@@ -88,14 +88,16 @@ article{
     width:60rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     margin:0 auto;
 }
 a{
     text-decoration: none;
+    width:13.4rem;
+    margin-right: 0.725rem;
+    margin-left: 0.725rem;
 }
 figure{
-    margin-right: 1.45rem;;
     margin-bottom: 1.5rem;
     border:1px solid #E8E8E8;
     border-radius: 0.25rem;
@@ -148,8 +150,11 @@ footer{
     article{
         width:90%;
     }
-    figure{
+    a{
         width:40%;
+    }
+    figure{
+        width: 95%;
     }
     img{
         width:100%;
@@ -183,8 +188,12 @@ footer{
     article{
         width:90%;
     }
-    figure{
+    a{
         width:90%;
+        margin:0;
+    }
+    figure{
+        width:100%;
     }
     img{
         width:100%;
