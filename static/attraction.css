@@ -214,6 +214,7 @@ footer{
     }
     .image{
         width:100%;
+        object-fit: cover;
     }
     .booking{
         width:100%;
@@ -240,6 +241,7 @@ footer{
     }
     .image{
         width:100%;
+        object-fit: cover;
     }
     .content{
         width:95%;
