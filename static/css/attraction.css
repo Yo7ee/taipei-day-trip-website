@@ -26,6 +26,7 @@ header{
 h1{
     color:#448899;
     font-size: 1.5rem;
+    cursor: pointer;
 }
 ul{
     list-style:none;
@@ -35,6 +36,7 @@ ul{
 }
 li{
     margin-left: 1rem;
+    cursor: pointer;
 }
 section{
     width:60rem;
@@ -51,7 +53,7 @@ section{
     position: relative;
     height:1.8rem;
     opacity: 0.75;
-
+    cursor: pointer;
 }
 .leftArrow{
     position:relative;
@@ -59,6 +61,7 @@ section{
     left:0.8rem;
     height:1.8rem;
     opacity: 0.75;
+    cursor: pointer;
 }
 .imgContainer{
     width:27rem;
@@ -156,6 +159,7 @@ section{
     width:8rem;
     height:1.2rem;
     border-radius: 0.25rem;
+    cursor: pointer;
 }
 #fee_up{
     width:0.9rem;
@@ -269,6 +273,7 @@ footer{
     grid-area: close;
     width:0.8rem;
     height:0.8rem;
+    cursor: pointer;
 }
 form{
     width:100%;
@@ -289,6 +294,7 @@ form{
     background: #448899;
     border-radius: 0.25rem;
     margin-bottom: 0.5rem;
+    cursor: pointer;
 }
 .a_switch{
     width:100%;
@@ -297,6 +303,7 @@ form{
     text-align: center;
     margin-bottom: 0.75rem;
     margin-top:0.1rem;
+    cursor: pointer;
 }
 .message{
     color:red;

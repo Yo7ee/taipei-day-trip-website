@@ -81,3 +81,8 @@ async function checkStatus(){
         logoutNav.style.display="list-item";
     };
 };
+
+//回首頁
+function backtohome(){
+    location.assign("/")
+};

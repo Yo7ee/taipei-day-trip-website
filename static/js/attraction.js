@@ -123,13 +123,8 @@ async function checkStatus(){
 //登出
 function logout(){
     let src="/api/user";
-    fetch(src, {method:'DELET'}).then(function(response){
+    fetch(src, {method:'DELETE'}).then(function(response){
         return response.json();
     });
     location.assign(location.href)
-}
-
-//回首頁
-function backtohome(){
-    location.assign("/")
-}
+};
