@@ -281,7 +281,7 @@ def signin():
 			mydb.close()
 			print("mybd connection is closed")
 
-@app.route("/api/user", methods=["DELET"])
+@app.route("/api/user", methods=["DELETE"])
 def logout():
 	session.pop("email", None)
 	session["status"]="未登入"
