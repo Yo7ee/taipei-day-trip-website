@@ -9,6 +9,8 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
+app.secret_key="abc" #For session
+
 # Pages
 @app.route("/")
 def index():
@@ -37,13 +39,6 @@ connectionPool=pool(
 
 @app.route("/api/attractions/", methods=["GET"])
 def page():
-	#連線資料庫
-	# mydb=mysql.connector.connect(
-	# 	host=config.mysql["host"],
-	# 	user=config.mysql["user"],
-	# 	password=config.mysql["password"],
-	# 	database="taipeiAttraction",
-	# )
 	mydb=connectionPool.get_connection()
 	keyword=request.args.get("keyword")
 	# print(type(getData)) #資料型態list
@@ -117,13 +112,6 @@ def page():
 
 @app.route("/api/attraction/<id>", methods=["GET"])
 def attractionId(id):
-	#連線資料庫
-	# mydb=mysql.connector.connect(
-	# 	host=config.mysql["host"],
-	# 	user=config.mysql["user"],
-	# 	password=config.mysql["password"],
-	# 	database="taipeiAttraction"
-	# )
 	mydb=connectionPool.get_connection() 	
 	try:
 		mycursor=mydb.cursor()
@@ -161,5 +149,147 @@ def attractionId(id):
 			mycursor.close()
 			mydb.close()
 			print("mybd connection is closed")
+
+@app.route("/api/user", methods=["GET"])
+def checkName():
+	try:
+		mydb=connectionPool.get_connection()
+		mycursor=mydb.cursor()
+		email=session.get("email")
+		print(session)
+		print('email' in session)
+		if 'email' in session:
+			mycursor.execute("SELECT id, name, email from member WHERE email=%s", (email,))
+			getData=mycursor.fetchall()
+			print(getData[0][0])
+			result={
+				"data":{
+					"id":getData[0][0],
+					"name":getData[0][1],
+					"email":getData[0][2]
+				}
+			}
+			return jsonify(result)
+		else:
+			print(email)
+			result={
+				"data":None
+			}
+			return jsonify(result)
+	finally:
+		if mydb.is_connected():
+			mycursor.close()
+			mydb.close()
+			print("mybd connection is closed")
+
+@app.route("/api/user", methods=["POST"])
+def signup():
+	Name=request.form["name"]
+	Email=request.form["email"]
+	Password=request.form["password"]
+
+	mydb=connectionPool.get_connection()
+	mycursor=mydb.cursor()
+	mycursor.execute("SELECT email from member WHERE email=%s", (Email,))
+	checkEmail=mycursor.fetchall()
+	print("name:"+Name)
+	print("Email:"+Email)
+	print("password:"+Password)
+	print(Email=="")
+	print(checkEmail)
+	print(Email in str(checkEmail))
+
+	try:
+		if Name=="" or Email=="" or Password=="":
+			result={
+				"error":True,
+				"message":"姓名或email或密碼不可為空"
+			}
+			return jsonify(result, 400)
+		elif Email in str(checkEmail):
+			result={
+				"error":True,
+				"message":"email已被註冊"
+			}
+			return jsonify(result, 400)
+		else:
+			sql="INSERT INTO member(name, email, password) VALUES(%s, %s, %s)"
+			val=(Name, Email, Password)
+			mycursor.execute(sql, val)
+			mydb.commit()
+			print(mycursor.rowcount, "record inserted.")
+			result={
+				"ok":True,
+				"message":"註冊成功"
+			}
+			return jsonify(result, 200)
+	except:
+		result={
+			"error":True,
+			"message":"伺服器內部錯誤"
+		}
+		return jsonify(result, 500)
+	finally:
+		if mydb.is_connected():
+			mycursor.close()
+			mydb.close()
+			print("mybd connection is closed")
+
+@app.route("/api/user", methods=["PATCH"])
+def signin():
+	email=request.form["email"]
+	password=request.form["password"]
+	mydb=connectionPool.get_connection()
+	mycursor=mydb.cursor()
+	mycursor.execute("SELECT name FROM member WHERE email=%s and password=%s", (email,password))
+	userCheck=mycursor.fetchall()
+	try:
+		if userCheck==[]:
+			condition="未登入"
+			session["status"]=condition
+			result={
+				"error":True,
+				"message":"帳號、或密碼輸入錯誤"
+			}
+			return jsonify(result, 400)
+		elif email=="" or password=="":
+			condition="未登入"
+			session["status"]=condition
+			result={
+				"error":True,
+				"message":"帳號、或密碼不可空白"
+			}
+			return jsonify(result, 400)
+		else:
+			condition="已登入"
+			session["status"]=condition
+			session["email"]=email
+			session["password"]=password
+			result={
+				"ok":True
+			}
+			return jsonify(result, 200)
+	except:
+		result={
+			"error":True,
+			"message":"伺服器內部錯誤"
+		}
+		return jsonify(result, 500)
+	finally:
+		if mydb.is_connected():
+			mycursor.close()
+			mydb.close()
+			print("mybd connection is closed")
+
+@app.route("/api/user", methods=["DELET"])
+def logout():
+	session.pop("email", None)
+	session["status"]="未登入"
+	result={
+		"ok":True
+	}
+	return result
+
+
 
 app.run(host='0.0.0.0', port=3000, debug=True)

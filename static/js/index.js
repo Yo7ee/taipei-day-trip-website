@@ -2,6 +2,8 @@ let article=document.querySelector('article');
 let nextPage=0;
 let src="/api/attractions/?page="+nextPage;
 
+checkStatus();
+
 const data = 
 fetch(src, {method:'get'}).then(function(response){
     return response.json();
@@ -272,3 +274,30 @@ function searchKeyword(){
         };
     };
 };
+
+//檢查會員登入狀態流程
+async function checkStatus(){
+    let src="/api/user";
+    let signinNav=document.querySelector('.signinNav');
+    let logoutNav=document.querySelector('.logoutNav');
+    const response=await fetch(src, {method:'GET'});
+    const data=await response.json();
+    console.log(data.data)
+
+    if(data.data==null){
+        signinNav.style.display="list-item";
+        logoutNav.style.display="none";
+    }else{
+        signinNav.style.display="none";
+        logoutNav.style.display="list-item";
+    };
+};
+
+//登出
+function logout(){
+    let src="/api/user";
+    fetch(src, {method:'DELET'}).then(function(response){
+        return response.json();
+    });
+    location.assign(location.href)
+}
