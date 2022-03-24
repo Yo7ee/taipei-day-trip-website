@@ -6,18 +6,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-    <link href="{{ url_for('static', filename='style.css')}}" type="text/css" rel="stylesheet">
-    <script src="../static/index.js" defer></script>
+    <link href="{{ url_for('static', filename='css/style.css')}}" type="text/css" rel="stylesheet">
+    <script src="../static/js/index.js" defer></script>
+    <script src="../static/js/window.js" defer></script>
 
 </head>
 <body>
     <header>
         <div class="header">
-            <h1>台北一日遊</h1>
+            <h1 onclick="backtohome();">台北一日遊</h1>
             <nav>
                 <ul>
                     <li>預定行程</li>
-                    <li>登入/註冊</li>
+                    <li class="signinNav" onclick="showSignin();" style="display:list-item">登入/註冊</li>
+                    <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
                 </ul>
             </nav>
         </div>
@@ -28,12 +30,13 @@
             <h2>輕鬆享受台北一日悠閒</h2>
             <p>探索每個角落，體驗城市的深度旅遊行程</p>
                 <div class="searchbar">
-                    <input type="text" name="name" placeholder="輸入景點名稱查詢">
-                    <button onclick="searchKeyword();"><img class="search" src="/static/icon_search.png"></button>
+                    <input class="input_search" type="text" name="name" placeholder=" 輸入景點名稱查詢">
+                    <button onclick="searchKeyword();"><img class="search" src="/static/icon/icon_search.png"></button>
                 </div>
             </div>
         </main>
     </section>
+
     <article>
 
     </article>
@@ -43,6 +46,40 @@
     <footer>
         <div class="footer">COPYRIGHT©2021 台北一日遊</div>
     </footer>
+    <div class="cover" style="display:none"></div>
+    <div class="signin_Window" style="display:none">
+        <div class="decorationBar"></div>
+        <div class="container">
+            <div class="HeadContainer">
+                <div class="WindowHead">登入會員帳號</div>
+                <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
+            </div>
+            <form class="signinForm" method="PATCH">
+                <input class="input_window" name="email" placeholder="輸入電子郵件">
+                <input type="password" class="input_window" name="password" placeholder="輸入密碼">
+            </form>
+            <button onclick="signin();" class="signin_up">登入帳戶</button>
+            <div class="signin message"></div>
+            <a onclick="showSignup();" class="a_switch">還沒有帳戶?點此註冊</a>
+        </div>
+    </div>
+    <div class="signup_Window" style="display:none">
+        <div class="decorationBar"></div>
+        <div class="container">
+            <div class="HeadContainer">
+                <div class="WindowHead">註冊會員帳號</div>
+                <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
+            </div>
+            <form class="signupForm" method="POST">
+                <input class="input_window" name="name" placeholder="輸入姓名">
+                <input class="input_window" name="email" placeholder="輸入電子郵件" required>
+                <input type="password" class="input_window" name="password" placeholder="輸入密碼">
+            </form>
+            <button onclick="signup();" class="signin_up">註冊新帳戶</button>
+            <div class="signup message"></div>
+            <a onclick="showSignin();" class="a_switch">已經有帳戶了?點此登入</a>
+        </div>
+    </div>
 </body>
 
 

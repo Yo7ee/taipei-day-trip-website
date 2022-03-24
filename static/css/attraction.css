@@ -26,6 +26,7 @@ header{
 h1{
     color:#448899;
     font-size: 1.5rem;
+    cursor: pointer;
 }
 ul{
     list-style:none;
@@ -35,6 +36,7 @@ ul{
 }
 li{
     margin-left: 1rem;
+    cursor: pointer;
 }
 section{
     width:60rem;
@@ -50,13 +52,16 @@ section{
     right:0.8rem;
     position: relative;
     height:1.8rem;
-
+    opacity: 0.75;
+    cursor: pointer;
 }
 .leftArrow{
     position:relative;
     top:-9rem;
     left:0.8rem;
     height:1.8rem;
+    opacity: 0.75;
+    cursor: pointer;
 }
 .imgContainer{
     width:27rem;
@@ -137,6 +142,8 @@ section{
     height:1.8rem;
 }
 .booking_4{
+    display: flex;
+    align-items: center;
     padding-bottom: 0.75rem;
     padding-top: 0.95rem;
     font-weight: bold;
@@ -152,6 +159,20 @@ section{
     width:8rem;
     height:1.2rem;
     border-radius: 0.25rem;
+    cursor: pointer;
+}
+#fee_up{
+    width:0.9rem;
+    height:0.9rem;
+    margin-left: 0.6rem;
+}
+#fee_down{
+    width:0.9rem;
+    height:0.9rem;
+    margin-left: 0.9rem;
+}
+label{
+    margin-left: 0.3rem;
 }
 .option,.option1,.option2{
     font-weight: normal;
@@ -194,7 +215,107 @@ footer{
     align-items: center;
     margin-top:6rem;
 }
-
+.signin_Window{
+    grid-template-rows: 0.5rem 14.5rem;
+    justify-items: center;
+    position: absolute;
+    top:4rem;
+    left:0;/*把position的空間歸零，讓margin達成置中 */
+    right:0;
+    width:17rem;
+    height:14.5rem;
+    margin:0 auto;
+    background: #FFFFFF;
+    border-radius: 0.3rem;
+    box-shadow: 0px 4px 60px #AAAAAA;
+}
+.signup_Window{
+    grid-template-rows: 0.5rem 17rem;
+    justify-items: center;
+    position: absolute;
+    top:4rem;
+    left:0;/*把position的空間歸零，讓margin達成置中 */
+    right:0;
+    width:17rem;
+    height:17rem;
+    margin:0 auto;
+    background: #FFFFFF;
+    border-radius: 0.3rem;
+    box-shadow: 0px 4px 60px #AAAAAA;
+}
+.decorationBar{
+    width:17rem;
+    height:0.5rem;
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+    border-radius: 0.3rem 0.3rem 0 0;
+}
+.container{
+    width:15.5rem;
+    display: grid;
+    justify-items: center;
+}
+.HeadContainer{
+    width:100%;
+    display:grid;
+    grid-template-columns: 3.75rem 7.2rem 3.75rem 0.8rem;
+    grid-template-areas:". WindowHead . close";
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    height:1.35rem;
+}
+.WindowHead{
+    grid-area: WindowHead;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #666666;
+}
+.close{
+    grid-area: close;
+    width:0.8rem;
+    height:0.8rem;
+    cursor: pointer;
+}
+form{
+    width:100%;
+}
+.input_window{
+    width:100%;
+    height:2.25rem;
+    border: 1px solid #CCCCCC;
+    border-radius: 0.25rem;
+    margin-bottom: 0.4rem;
+    padding-left: 0.75rem;
+    box-sizing: border-box;
+}
+.signin_up{
+    width:100%;
+    font-size: 0.95rem;
+    color:#FFFFFF;
+    background: #448899;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+.a_switch{
+    width:100%;
+    font-size: 0.8rem;
+    color:#666666;
+    text-align: center;
+    margin-bottom: 0.75rem;
+    margin-top:0.1rem;
+    cursor: pointer;
+}
+.message{
+    color:red;
+}
+.cover{
+    background-color: #000000;
+    opacity: 0.25;
+    width: 100%;
+    height:100%;
+    top:0;
+    position:fixed;
+}
 /* 平板自由發揮 */
 @media (min-width:600px) and (max-width:1200px) {
     .header{
