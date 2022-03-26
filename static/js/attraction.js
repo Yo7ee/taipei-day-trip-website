@@ -107,6 +107,7 @@ async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
     let logoutNav=document.querySelector('.logoutNav');
+    console.log(document.cookie)
     const response=await fetch(src, {method:'GET'});
     const data=await response.json();
     console.log(data.data)
@@ -120,7 +121,17 @@ async function checkStatus(){
     };
 };
 
-//登出
+//登出 前端設置cookie
+// function logout(){
+//     let src="/api/user";
+//     fetch(src, {method:'DELETE'}).then(function(response){
+//         return response.json();
+//     });
+//     document.cookie='access_token='+null
+//     location.assign(location.href)
+// };
+
+//登出 後端設置cookie
 function logout(){
     let src="/api/user";
     fetch(src, {method:'DELETE'}).then(function(response){

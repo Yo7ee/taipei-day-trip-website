@@ -4,6 +4,7 @@ import data.config as config
 #For coonnection pool
 from mysql.connector import pooling
 pool=pooling.MySQLConnectionPool
+import jwt
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -150,15 +151,92 @@ def attractionId(id):
 			mydb.close()
 			print("mybd connection is closed")
 
+# @app.route("/api/user", methods=["GET"])
+# def checkName():
+# 	try:
+# 		mydb=connectionPool.get_connection()
+# 		mycursor=mydb.cursor()
+# 		email=session.get("email")
+# 		print(session)
+# 		print('email' in session)
+# 		if 'email' in session:
+# 			mycursor.execute("SELECT id, name, email from member WHERE email=%s", (email,))
+# 			getData=mycursor.fetchall()
+# 			print(getData[0][0])
+# 			result={
+# 				"data":{
+# 					"id":getData[0][0],
+# 					"name":getData[0][1],
+# 					"email":getData[0][2]
+# 				}
+# 			}
+# 			return jsonify(result)
+# 		else:
+# 			print(email)
+# 			result={
+# 				"data":None
+# 			}
+# 			return jsonify(result)
+# 	finally:
+# 		if mydb.is_connected():
+# 			mycursor.close()
+# 			mydb.close()
+# 			print("mybd connection is closed")
+
+#JWT 前端設置cookie
+# @app.route("/api/user", methods=["GET"])
+# def checkName():
+# 	try:
+# 		mydb=connectionPool.get_connection()
+# 		mycursor=mydb.cursor()
+# 		cookie1=request.cookies.get('Cookie')
+# 		print(cookie1)
+# 		cookie=request.headers['Cookie']
+# 		print(cookie)
+
+# 		if cookie != 'access_token=null':
+# 			print('token is not null')
+# 			token=cookie.split('=')[1]
+# 			print(token)
+# 			session=jwt.decode(token, "secret", algorithms='HS256')
+# 			email=session['email']
+# 			mycursor.execute("SELECT id, name, email from member WHERE email=%s", (email,))
+# 			getData=mycursor.fetchall()
+# 			print(getData[0][0])
+# 			result={
+# 				"data":{
+# 					"id":getData[0][0],
+# 					"name":getData[0][1],
+# 					"email":getData[0][2]
+# 				}
+# 			}
+# 			return jsonify(result)
+# 		else:
+# 			result={
+# 				"data":None
+# 			}
+# 			return jsonify(result)
+# 	finally:
+# 		if mydb.is_connected():
+# 			mycursor.close()
+# 			mydb.close()
+# 			print("mybd connection is closed")
+
+#JWT 後端設置cookie
 @app.route("/api/user", methods=["GET"])
 def checkName():
 	try:
 		mydb=connectionPool.get_connection()
 		mycursor=mydb.cursor()
-		email=session.get("email")
+		token=request.cookies.get('access_token')
+		print(token)
+		session=jwt.decode(token, "secret", algorithms='HS256')
 		print(session)
-		print('email' in session)
-		if 'email' in session:
+		status=session['status']
+
+		if status == '已登入':
+			print('email is not null')
+			email=session['email']
 			mycursor.execute("SELECT id, name, email from member WHERE email=%s", (email,))
 			getData=mycursor.fetchall()
 			print(getData[0][0])
@@ -171,7 +249,6 @@ def checkName():
 			}
 			return jsonify(result)
 		else:
-			print(email)
 			result={
 				"data":None
 			}
@@ -235,44 +312,106 @@ def signup():
 			mydb.close()
 			print("mybd connection is closed")
 
+# Flask session
+# @app.route("/api/user", methods=["PATCH"])
+# def signin():
+# 	email=request.form["email"]
+# 	password=request.form["password"]
+# 	mydb=connectionPool.get_connection()
+# 	mycursor=mydb.cursor()
+# 	mycursor.execute("SELECT name FROM member WHERE email=%s and password=%s", (email,password))
+# 	userCheck=mycursor.fetchall()
+# 	try:
+# 		if userCheck==[]:
+# 			condition="未登入"
+# 			session["status"]=condition
+# 			result={
+# 				"error":True,
+# 				"message":"帳號、或密碼輸入錯誤"
+# 			}
+# 			return jsonify(result, 400)
+# 		elif email=="" or password=="":
+# 			condition="未登入"
+# 			session["status"]=condition
+# 			result={
+# 				"error":True,
+# 				"message":"帳號、或密碼不可空白"
+# 			}
+# 			return jsonify(result, 400)
+# 		else:
+# 			condition="已登入"
+# 			session["status"]=condition
+# 			session["email"]=email
+# 			session["password"]=password
+# 			result={
+# 				"ok":True
+# 			}
+# 			return jsonify(result, 200)
+# 	except:
+# 		result={
+# 			"error":True,
+# 			"message":"伺服器內部錯誤"
+# 		}
+# 		return jsonify(result, 500)
+# 	finally:
+# 		if mydb.is_connected():
+# 			mycursor.close()
+# 			mydb.close()
+# 			print("mybd connection is closed")
+
+#JWT cookie set in backend
 @app.route("/api/user", methods=["PATCH"])
 def signin():
 	email=request.form["email"]
+	print(email)
 	password=request.form["password"]
+	print(password)
 	mydb=connectionPool.get_connection()
 	mycursor=mydb.cursor()
+	#驗證帳密是否正確
 	mycursor.execute("SELECT name FROM member WHERE email=%s and password=%s", (email,password))
 	userCheck=mycursor.fetchall()
+	
 	try:
 		if userCheck==[]:
 			condition="未登入"
-			session["status"]=condition
+			decode_jwt={"status":condition}
+			encoded_jwt=jwt.encode(decode_jwt, "secret", algorithm="HS256")
 			result={
 				"error":True,
 				"message":"帳號、或密碼輸入錯誤"
 			}
-			return jsonify(result, 400)
+			resp = make_response(result,200)
+			resp.set_cookie("access_token", encoded_jwt)
+			print("未登入1")
+			return resp
 		elif email=="" or password=="":
 			condition="未登入"
-			session["status"]=condition
+			decode_jwt={"status":condition}
+			encoded_jwt=jwt.encode(decode_jwt, "secret", algorithm="HS256")
 			result={
 				"error":True,
 				"message":"帳號、或密碼不可空白"
 			}
-			return jsonify(result, 400)
+			resp = make_response(result,200)
+			resp.set_cookie("access_token", encoded_jwt)
+			print("未登入2")
+			return resp
 		else:
 			condition="已登入"
-			session["status"]=condition
-			session["email"]=email
-			session["password"]=password
+			decode_jwt={"status":condition,"email":email}
+			encoded_jwt=jwt.encode(decode_jwt, "secret", algorithm="HS256")
 			result={
 				"ok":True
 			}
-			return jsonify(result, 200)
+			resp = make_response(result,200)
+			resp.set_cookie("access_token", encoded_jwt)
+			print("succcess")
+			return resp
 	except:
 		result={
 			"error":True,
-			"message":"伺服器內部錯誤"
+			"message":"伺服器內部錯誤",
 		}
 		return jsonify(result, 500)
 	finally:
@@ -281,15 +420,22 @@ def signin():
 			mydb.close()
 			print("mybd connection is closed")
 
+#後端設置cookie
 @app.route("/api/user", methods=["DELETE"])
 def logout():
-	session.pop("email", None)
-	session["status"]="未登入"
+	print('logout')
+	token=request.cookies.get('access_token')
+	decode_jwt=jwt.decode(token, "secret", algorithms='HS256')
+	decode_jwt.pop("email", None)
+	decode_jwt["status"]="未登入"
+	encoded_jwt=jwt.encode(decode_jwt, "secret", algorithm='HS256')
 	result={
 		"ok":True
 	}
-	return result
-
+	resp = make_response(result,200)
+	resp.set_cookie("access_token", encoded_jwt)
+	
+	return resp
 
 
 app.run(host='0.0.0.0', port=3000, debug=True)
