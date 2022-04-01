@@ -7,19 +7,35 @@ let description=document.querySelector(".p_description");
 let address=document.querySelector(".p_address");
 let transport=document.querySelector(".p_transport");
 let imgContainer=document.querySelector(".img")
-let myImg=document.createElement('img');
-myImg.className='image';
+let myImg=document.createElement('img')
 let dotContainer=document.querySelector('.dotContainer')
+let date=document.querySelector('.date')
 
 //檢查會員登入狀態流程
 checkStatus();
+
+//設定日期選擇最小值
+let today=new Date(); //Thu Mar 31 2022 15:31:18 GMT+0800 (CST)
+let tomorrow= new Date(today)
+console.log(tomorrow.getDate())
+tomorrow.setDate(tomorrow.getDate()+1)
+// let monthDate=new Date(Year, Month, 0).getDate();//to know the month date number
+let tomorrowFormat=tomorrow.toLocaleString('zh-TW',{
+    year:'numeric',
+    month:'2-digit',
+    day:'2-digit',
+});
+let Year=tomorrowFormat.split('/')[0];
+let Month=tomorrowFormat.split('/')[1];
+let Day=tomorrowFormat.split('/')[2];
+let minDate=Year+'-'+Month+'-'+Day;
+date.min=minDate;
 
 //show attraction and put first image on the page
 let path=location.pathname;
 let id=path.split("/")[2] //path=>/attraction/3, path.split("/")=>('','attraction', '3')
 let src="/api/attraction/"+id;
-const data=
-fetch(src).then(function(response){
+const data=fetch(src).then(function(response){
     return response.json();
 });
 data.then(function(jsonobj){
@@ -31,7 +47,17 @@ data.then(function(jsonobj){
     description.textContent=list.description;
     address.textContent=list.address;
     transport.textContent=list.transport;
+    console.log(list.images[7])
+    //輪播方法二
+    // for(i=list.images.length-1; i>0; i--){
+    //     let myImg=document.createElement('img');
+    //     myImg.className='image';
+    //     myImg.src=list.images[i]
+    //     imgContainer.appendChild(myImg)
+    // };
+    //輪播方法一
     myImg.src=list.images[0];
+    myImg.className='image';
     imgContainer.appendChild(myImg);
     console.log(list.images.length)
     let myDot=document.createElement('li')
@@ -43,6 +69,18 @@ data.then(function(jsonobj){
         dotContainer.appendChild(myDot)
     }
     });
+// arrow function
+function showCurrent(){
+    let slideShowContainer=document.querySelector('.slideShowContainer')
+    let img=document.querySelectorAll(".image")
+    console.log(img)
+    let count=0;
+    data.then(function(jsonobj){
+        let imageNumber=jsonobj.data.images.length;
+        
+    })
+    
+}
 
 //Left/Right Arrow function
 let minNumber=0;
@@ -91,7 +129,7 @@ function rightArrow(){
 }; 
 
 function feeOption(){
-    let option=document.querySelector('input[value="up"]:checked');
+    let option=document.querySelector('input[value="09:00~12:00"]:checked');
     let option1=document.querySelector('.option1')
     if(option===null){
         option1.textContent="新台幣2500元"
@@ -101,7 +139,34 @@ function feeOption(){
         console.log("選擇上半天")
     }
 };
-
+//確認預定行程
+async function booking_created(){
+    let src="/api/booking";
+    let path=location.href
+    let attractionId=path.split('/').pop();
+    console.log(attractionId)
+    let bookingForm=document.querySelector(".booking_form");
+    console.log(bookingForm);
+    let formData=new FormData(bookingForm);
+    console.log(formData);
+    let priceHtml=document.querySelector('.option1');
+    let priceText=priceHtml.textContent;
+    let price=priceText.replace(/\D/g, '');
+    console.log(price)
+    let cookie=document.cookie
+    let messageDate=document.querySelector(".date_message")
+    const response=await fetch(src, {method:'POST', body:formData, headers:{"cookie":cookie, "attractionId":attractionId, "price":price}});
+    const data=await response.json();
+    console.log(data.length)
+    if(data[1]==400){
+        messageDate.textContent="請選擇日期";
+    }else if(data[1]==403){
+        showSignin();
+        console.log("test")
+    }else{
+        location.assign("/booking");
+    }
+}
 //檢查會員登入狀態流程
 async function checkStatus(){
     let src="/api/user";
@@ -121,15 +186,6 @@ async function checkStatus(){
     };
 };
 
-//登出 前端設置cookie
-// function logout(){
-//     let src="/api/user";
-//     fetch(src, {method:'DELETE'}).then(function(response){
-//         return response.json();
-//     });
-//     document.cookie='access_token='+null
-//     location.assign(location.href)
-// };
 
 //登出 後端設置cookie
 function logout(){

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <option>台北一日遊</option>
+    <title>台北一日遊景點</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
@@ -17,7 +17,7 @@
             <h1 onclick="backtohome();">台北一日遊</h1>
             <nav>
                 <ul>
-                    <li>預定行程</li>
+                    <li class="bookNav" onclick="bookCheck();">預定行程</li>
                     <li class="signinNav" onclick="showSignin();" style="display:list-item">登入/註冊</li>
                     <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
                 </ul>
@@ -26,7 +26,11 @@
     </header>
     <section>
         <div class=imgContainer>
-            <div class="img"></div>
+            <div class="slideShowContainer">
+                <div class="img">
+
+                </div>
+            </div>
             <div class="icon">
                 <img class="leftArrow" src="/static/icon/left arrow.png" onclick="leftArrow();">
                 <ul class="dotContainer"></ul>
@@ -39,17 +43,19 @@
             <div class="booking">
                 <div class="booking_1">訂購導覽行程</div>
                 <div class="booking_2">以此景點為中心的一日行程，帶您探索城市角落故事</div>
-                <div class="booking_3">選擇日期：<input type="date" class="date"></div>
-                <div class="booking_4">選擇時間：
-                <!-- name is for group, so that user only can choose one in this radio group -->
-                <input type="radio" id="fee_up" class="option" name="time" value="up" onchange="feeOption();" checked>
-                <label for="up" class="option">上半天</label>
-                <input type="radio" id="fee_down" class="option" name="time" value="down" onchange="feeOption();" >
-                <label for='down' class="option">下半天</label></div>
-                <div class="booking_5">導覽費用：
-                    <div class="option1">新台幣2000元</div>
-                </div>
-                <button class="booking_6">開始預定行程</button>
+                <form class="booking_form">
+                    <div class="booking_3">選擇日期：<input type="date" class="date" name="date" required><div class="date_message"></div></div>
+                    <div class="booking_4">選擇時間：
+                    <!-- name is for group, so that user only can choose one in this radio group -->
+                    <input type="radio" id="fee_up" class="option" name="time" value="09:00~12:00" onchange="feeOption();" checked>
+                    <label for="fee_up" class="option">上半天</label>
+                    <input type="radio" id="fee_down" class="option" name="time" value="12:00~18:00" onchange="feeOption();" >
+                    <label for="fee_down" class="option">下半天</label></div>
+                    <div class="booking_5">導覽費用：
+                        <div class="option1">新台幣2000元</div>
+                    </div>
+                </form>
+                <button class="booking_6" onclick="booking_created();">開始預定行程</button>
             </div>
         </div>
     </section>
@@ -70,7 +76,7 @@
                 <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
             </div>
             <form class="signinForm" method="PATCH">
-                <input class="input_window" name="email" placeholder="輸入電子郵件">
+                <input type="email" class="input_window" name="email" placeholder="輸入電子郵件">
                 <input type="password" class="input_window" name="password" placeholder="輸入密碼">
             </form>
             <button onclick="signin();" class="signin_up">登入帳戶</button>
@@ -87,7 +93,7 @@
             </div>
             <form class="signupForm" method="POST">
                 <input class="input_window" name="name" placeholder="輸入姓名">
-                <input class="input_window" name="email" placeholder="輸入電子郵件" required>
+                <input type="email" class="input_window" name="email" placeholder="輸入電子郵件" required>
                 <input type="password" class="input_window" name="password" placeholder="輸入密碼">
             </form>
             <button onclick="signup();" class="signin_up">註冊新帳戶</button>

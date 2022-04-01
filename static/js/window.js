@@ -53,6 +53,7 @@ async function signin(){
     let src="/api/user";
     let signinForm=document.querySelector(".signinForm")
     let formData=new FormData(signinForm)
+    console.log(formData)
     let message=document.querySelector(".signin")
     let response=await fetch(src, {method:'PATCH', body:formData});
     let data=await response.json();
@@ -70,7 +71,9 @@ async function signin(){
 function signup(){
     let src="/api/user";
     let signupForm=document.querySelector(".signupForm")
+    console.log(signupForm)
     let formData=new FormData(signupForm)
+    console.log(formData)
     let message=document.querySelector(".signup")
     let data=fetch(src, {method:'POST', body:formData}).then(function(response){
         return response.json()
@@ -87,9 +90,9 @@ async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
     let logoutNav=document.querySelector('.logoutNav');
-    let cookie=document.cookies
-    console.log(cookie)
-    const response=await fetch(src, {method:'GET', body:cookie});
+    let cookie=document.cookie
+    console.log("checkStatus: "+cookie)
+    const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}});
     const data=await response.json();
     console.log(data.data)
 
@@ -102,7 +105,35 @@ async function checkStatus(){
     };
 };
 
+//登出 後端設置cookie
+function logout(){
+    let src="/api/user";
+    fetch(src, {method:'DELETE'}).then(function(response){
+        return response.json();
+    });
+    location.assign(location.href)
+};
+
 //回首頁
 function backtohome(){
     location.assign("/")
 };
+
+//預定行程
+async function bookCheck(){
+    let src="/api/user";
+    let cookie=document.cookie
+    console.log(cookie)
+    const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}})
+    const data=await response.json();
+    console.log(data.data)
+    result=data.data;
+    if (result==null){
+        signIn.style.display="grid";
+        cover.style.display="grid";
+    }else{
+        location.assign("/booking")
+    }
+
+
+}
