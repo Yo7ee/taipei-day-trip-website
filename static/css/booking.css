@@ -108,6 +108,7 @@ p.first, .userName{
 .delete{
     width:1.5rem;
     height:1.5rem;
+    cursor: pointer;
 }
 .notice{
     margin-bottom: 2.25rem;
