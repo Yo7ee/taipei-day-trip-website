@@ -33,8 +33,12 @@ ul{
     font-size: 0.8rem ;
 }
 li{
+    transition: text-shadow .3s;
     margin-left: 1rem;
     cursor: pointer;
+}
+li:hover{
+    text-shadow: 2px 2px 3px #D8D8D8;
 }
 section{
     background:linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
@@ -86,7 +90,6 @@ button{
     background:#448899;
     border-radius: 0 10% 10% 0;
 }
-
 article{
     width:60rem;
     display: flex;
@@ -101,10 +104,14 @@ a{
     margin-left: 0.725rem;
 }
 figure{
+    transition:box-shadow .3s;
     margin-bottom: 1.5rem;
     border:1px solid #E8E8E8;
     border-radius: 0.25rem;
     width:13.4rem;
+}
+figure:hover{
+    box-shadow: 0 4px 8px 0 #666666;
 }
 img{
     width:13.4rem;
@@ -251,6 +258,9 @@ form{
         left:4rem;
         z-index: 100;
     } 
+    .signin_Window, .signup_Window{
+        z-index: 100;
+    }
     article{
         width:90%;
     }

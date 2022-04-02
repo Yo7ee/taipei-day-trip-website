@@ -9,7 +9,6 @@
     <link href="{{ url_for('static', filename='css/style.css')}}" type="text/css" rel="stylesheet">
     <script src="../static/js/index.js" defer></script>
     <script src="../static/js/window.js" defer></script>
-
 </head>
 <body>
     <header>
@@ -17,7 +16,7 @@
             <h1 onclick="backtohome();">台北一日遊</h1>
             <nav>
                 <ul>
-                    <li>預定行程</li>
+                    <li class="bookNav" onclick="bookCheck();">預定行程</li>
                     <li class="signinNav" onclick="showSignin();" style="display:list-item">登入/註冊</li>
                     <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
                 </ul>
