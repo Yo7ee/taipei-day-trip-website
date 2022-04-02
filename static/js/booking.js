@@ -27,6 +27,10 @@ async function checkStatus(){
 let src="/api/user";
 const nameData=fetch(src, {method:'GET'}).then(function(response){
     return response.json()});
+let html=document.querySelector("html");
+let body=document.querySelector("body");
+let footer=document.querySelector("footer");
+
 
 
 //取得訂單內容並顯示在網頁
@@ -52,8 +56,11 @@ async function getBooking(){
         let name=object.data.name
         console.log(name)
         if (result==undefined){
-            none_booked.style.display="block";
             booked.style.display="none";
+            none_booked.style.display="block";
+            html.style.height="100%";
+            body.style.height="100%";
+            footer.style.height="100%";
         }else{
             none_booked.style.display="none";
             booked.style.display="block";
@@ -70,13 +77,18 @@ async function getBooking(){
 async function deleteBooking(){
     let none_booked=document.querySelector(".none_booked");
     let booked=document.querySelector(".booked");
+    
     let cookie=document.cookie
     let src="/api/booking";
     const response= await fetch(src, {method:"DELETE", headers:{'cookie':cookie}});
     const data= await response.json();
     if (response.status==200){
-        none_booked.style.display="block";
         booked.style.display="none";
+        none_booked.style.display="block";
+        html.style.height="100%";
+        body.style.height="100%";
+        footer.style.height="100%";
+        
         checkStatus();
     }else{
         signinNav.style.display="list-item";
