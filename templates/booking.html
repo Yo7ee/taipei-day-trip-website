@@ -9,6 +9,8 @@
     <link href="{{url_for('static', filename='css/booking.css')}}" type="text/css" rel="stylesheet">
     <script src="../static/js/window.js" defer></script>
     <script src="../static/js/booking.js" defer></script>
+    <script src="https://js.tappaysdk.com/tpdirect/v5.9.0"></script>    
+    <script src="../static/js/tappay.js" defer></script>
 </head>
 <body>
     <header>
@@ -30,7 +32,7 @@
             <p class="first title">，待預定的行程如下：</p>
         </div>
     </div>
-    <div class="booked" style="display:block">
+    <div class="booked" style="visibility: hidden;">
         <article class="booking_schedule">
             <div class="booking_schedule_container">
                 <div class="content_container">
@@ -53,10 +55,10 @@
         <article>
             <div class="booking_schedule_container">
                 <p class="title">您的聯絡資訊</p>
-                <form method="POST">
-                    <div>聯絡姓名：<input name="name"></div>
-                    <div>聯絡信箱：<input type="email" name="email"></div>
-                    <div>手機號碼：<input type="tel" name="mobilePhone"></div>
+                <form class="contactForm" method="POST">
+                    <div>聯絡姓名：<input name="name" required></div>
+                    <div>聯絡信箱：<input type="email" name="email" required></div>
+                    <div>手機號碼：<input type="tel" name="mobilePhone" placeholder="0912-123-123" pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}" required></div>
                 </form>
                 <p class="notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
             </div>
@@ -65,16 +67,16 @@
             <div class="booking_schedule_container">
                 <p class="title">信用卡付款資訊</p>
                 <form method="POST">
-                    <div>卡片號碼：<input name="creditcard"></div>
-                    <div>過期時間：<input name="expiredday"></div>
-                    <div class="password">驗證密碼：<input type="password" name="password"></div>
+                    <div class="tpfieldContainer">卡片號碼：<div class="tpfield" id="card-number"></div></div>
+                    <div class="tpfieldContainer">過期時間：<div class="tpfield" id="card-expiration-date"></div></div>
+                    <div class="tpfieldContainer">驗證密碼：<div class="tpfield" id="card-ccv"></div></div>
                 </form>
             </div>
         </article>
         <article class="article_bottom">
             <div class="booking_schedule_container">
             <p class="total_price">總價：</p>
-            <button class="pay">確認訂購並付款</button>
+            <button class="pay" onclick="pay();">確認訂購並付款</button>
             </div>
         </article>
     </div>
@@ -118,6 +120,16 @@
             <button onclick="signup();" class="signin_up">註冊新帳戶</button>
             <div class="signup message"></div>
             <a onclick="showSignin();" class="a_switch">已經有帳戶了?點此登入</a>
+        </div>
+    </div>
+    <div class="alert_Window" style="display:none">
+        <div class="decorationBar"></div>
+        <div class="container">
+            <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
+            <div class="HeadContainer">
+                <div class="WindowHead">錯誤</div>
+                <div class="alert_message"></div>
+            </div>
         </div>
     </div>
 </body>

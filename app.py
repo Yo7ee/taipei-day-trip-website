@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-from time import time
 from flask import *
 import mysql.connector
 import data.config as config
@@ -8,7 +6,10 @@ from mysql.connector import pooling
 pool=pooling.MySQLConnectionPool
 import jwt
 import datetime
-from datetime import timezone, tzinfo
+import requests
+import random
+import string
+
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -550,5 +551,160 @@ def delete_booking():
 		}
 		return jsonify(result, 403)
 
+@app.route("/api/orders", methods=["POST"])
+def orders():
+	access_token=request.cookies.get('access_token')
+	try:
+		while bool(access_token) is True:
+			de_access_code_jwt=jwt.decode(access_token, "secret", algorithms=['HS256'])
+			status=de_access_code_jwt["status"]
+			order_token=request.cookies.get('order_token')
+			de_order_code_jwt=jwt.decode(order_token, "secret", algorithms=['HS256'])
+			price=de_order_code_jwt["price"]
+			if status=="已登入":
+				mobilePhone=request.form["mobilePhone"]
+				name=request.form["name"]
+				email=request.form["email"]
+				if mobilePhone=="" or name=="" or email=="":
+					result={
+						"error":True,
+						"message":"訂單建立失敗，請確認聯絡資訊"
+					}
+					return jsonify(result, 400)
+				else:
+					prime=request.headers["prime"]
+					print(prime)
+					date=datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
+					count=''.join(random.sample(string.digits, 5))
+					print(count)
+					number=date+str(count)
+					print(number)
+					condition="未付款"
+					session["status"]=condition
+					#呼叫tappay api
+					url="https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+					Header={
+						'content-Type':"application/json",
+						'x-api-key':"partner_d2MH38fWyC3rCIJ08g74XW70n54IKsIfNPnogUaaVn7Qt2qTuJ0uFdV8"
+					}
+					data={
+						"prime":prime,
+						"partner_key":"partner_d2MH38fWyC3rCIJ08g74XW70n54IKsIfNPnogUaaVn7Qt2qTuJ0uFdV8",
+						"merchant_id":"Yo7_CTBC",
+						"amount":price,
+						"details":"taipei day trip",
+						"cardholder":{
+							"phone_number":mobilePhone,
+							"name":name,
+							"email":email
+						},
+						"instalment":0,
+						"remember":False
+					}
+					post_req=requests.post(url, headers=Header, data=json.dumps(data))
+					session["pay_status"]=post_req.json()["status"]
+					print(post_req.json()["status"])
+					if session["pay_status"]==0:
+						condition="付款成功"
+						session["status"]=condition
+						session["count"]=count
+						print(session["status"])
+						mydb=connectionPool.get_connection()
+						cursor=mydb.cursor()
+						sql="INSERT INTO booking (bookingNumber, email, name, phoneNumber) VALUES(%s, %s, %s, %s)"
+						val=(number, email, name, mobilePhone)
+						cursor.execute(sql, val)
+						mydb.commit()
+						print(cursor.rowcount, "record inserted.")
+						cursor.close()
+						mydb.close()
+						print("Mydb connection is closed")
+						result={
+							"data":{
+								"number":number,
+								"payment":{
+									"status":session["pay_status"],
+									"message":session["status"]
+								}
+							}
+						}
+						return jsonify(result, 200)
+					else:
+						result={
+							"number":number,
+							"error":True,
+							"message":"付款失敗"
+						}
+						return jsonify(result, 400)
+			else:
+				result={
+					"error":True,
+					"message":"請先登入"
+				}
+			return jsonify(result, 403)
+		result={
+			"error":True,
+			"message":"請先登入"
+		}
+		return jsonify(result, 403)
+	except:
+		result={
+			"error":True,
+			"message":"內部伺服器錯誤"
+		}
+		return jsonify(result, 500)
+
+@app.route("/api/order/<orderNumber>", methods=["GET"])
+def done_order(orderNumber):
+	access_token=request.cookies.get('access_token')
+	while bool(access_token) is True:
+		de_access_code_jwt=jwt.decode(access_token, "secret", algorithms=['HS256'])
+		status=de_access_code_jwt["status"]
+		if status =="已登入":
+			order_token=request.cookies.get('order_token')
+			de_order_code_jwt=jwt.decode(order_token, "secret", algorithms=['HS256'])
+			date=de_order_code_jwt["date"]
+			time=de_order_code_jwt["time"]
+			price=de_order_code_jwt["price"]
+			id=de_order_code_jwt["id"]
+			mydb=connectionPool.get_connection()
+			cursor=mydb.cursor()
+			cursor.execute("SELECT name, address, imageUrl FROM attraction WHERE id=%s", (id,))
+			get_data=cursor.fetchone()
+			cursor.execute("SELECT name, email, phoneNumber FROM booking WHERE bookingNumber=%s", (orderNumber,))
+			contact=cursor.fetchone()
+			print(contact)
+			cursor.close()
+			mydb.close()
+			print("Mydb connection is closed")
+			result={
+				"data":{
+					"number":orderNumber,
+					"price":price,
+					"trip":{
+						"attraction":{
+							"id":id,
+							"name":get_data[0],
+							"address":get_data[1],
+							"images":get_data[2].split(",")[0]
+						},
+						"date":date,
+						"time":time,
+					},
+					"contact":{
+						"name":contact[0],
+						"email":contact[1],
+						"phone":contact[2]
+					},
+					"status":session["pay_status"]
+				}
+			}
+			return jsonify(result, 200)
+		else:
+			result={
+				"error":True,
+				"message":"請先登入"
+			}
+			return jsonify(result, 403)
 
 app.run(host='0.0.0.0', port=3000, debug=True)

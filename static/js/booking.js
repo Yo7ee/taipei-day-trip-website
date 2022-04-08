@@ -31,8 +31,6 @@ let html=document.querySelector("html");
 let body=document.querySelector("body");
 let footer=document.querySelector("footer");
 
-
-
 //取得訂單內容並顯示在網頁
 async function getBooking(){
     let src="/api/booking";
@@ -47,6 +45,7 @@ async function getBooking(){
     let address=document.querySelector(".address")
     let attractionImage=document.querySelector(".attractionImage")
     let userName=document.querySelector(".userName")
+    let totalPrice=document.querySelector(".total_price")
     console.log(userName)
     const response=await fetch(src, {method:"GET", headers:{'cookie':cookie}})
     const data=await response.json();
@@ -63,13 +62,14 @@ async function getBooking(){
             footer.style.height="100%";
         }else{
             none_booked.style.display="none";
-            booked.style.display="block";
+            booked.style.visibility="visible";
             attractionName.textContent=result.attraction.name;
             date.textContent=result.date;
             time.textContent=result.time;
             price.textContent=result.price;
             address.textContent=result.attraction.address;
             attractionImage.src=result.attraction.images;
+            totalPrice.textContent="總價： " + result.price + " 元"
         }
     })
 }
