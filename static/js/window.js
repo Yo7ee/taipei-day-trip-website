@@ -1,5 +1,6 @@
 let signIn=document.querySelector('.signin_Window');
 let signUp=document.querySelector('.signup_Window');
+let alert_Window=document.querySelector('.alert_Window')
 let cover=document.querySelector('.cover');
 
 function showSignin(){
@@ -22,6 +23,7 @@ function cross(){
     cover.style.display="none";
     signUp.style.display="none";
     signIn.style.display="none";
+    alert_Window.style.display="none";
     let signupMessage=document.querySelector(".signup")
     let signinMessage=document.querySelector(".signin")
     signupMessage.textContent=""
@@ -97,7 +99,7 @@ async function checkStatus(){
     console.log(data.data)
 
     if(data.data==null){
-        signinNav.style.display="list-item";
+        signinNav.style.visibility="visible";
         logoutNav.style.display="none";
     }else{
         signinNav.style.display="none";
@@ -108,10 +110,11 @@ async function checkStatus(){
 //登出 後端設置cookie
 function logout(){
     let src="/api/user";
+    console.log("logout")
     fetch(src, {method:'DELETE'}).then(function(response){
         return response.json();
     });
-    location.assign(location.href)
+    location.assign("/")
 };
 
 //回首頁

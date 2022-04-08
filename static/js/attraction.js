@@ -1,13 +1,15 @@
-let content=document.querySelector(".content")
-let Name=document.querySelector(".name");
-let category=document.querySelector(".category");
-let mrt=document.querySelector(".mrt");
-let article=document.querySelector("article")
-let description=document.querySelector(".p_description");
-let address=document.querySelector(".p_address");
-let transport=document.querySelector(".p_transport");
-let imgContainer=document.querySelector(".img")
+let content=document.querySelector('.content')
+let Name=document.querySelector('.name');
+let category=document.querySelector('.category');
+let mrt=document.querySelector('.mrt');
+let article=document.querySelector('article')
+let description=document.querySelector('.p_description');
+let address=document.querySelector('.p_address');
+let transport=document.querySelector('.p_transport');
+let imgContainer=document.querySelector('.img')
+let slideShowContainer=document.querySelector('.slideShowContainer')
 let myImg=document.createElement('img')
+
 let dotContainer=document.querySelector('.dotContainer')
 let date=document.querySelector('.date')
 
@@ -49,25 +51,37 @@ data.then(function(jsonobj){
     transport.textContent=list.transport;
     console.log(list.images[7])
     //輪播方法二
-    // for(i=list.images.length-1; i>0; i--){
-    //     let myImg=document.createElement('img');
-    //     myImg.className='image';
-    //     myImg.src=list.images[i]
-    //     imgContainer.appendChild(myImg)
-    // };
-    //輪播方法一
-    myImg.src=list.images[0];
-    myImg.className='image';
-    imgContainer.appendChild(myImg);
-    console.log(list.images.length)
+        myImg.className='image';
+        myImg.setAttribute('id', 'active')
+        myImg.src=list.images[0];
+        imgContainer.appendChild(myImg);
+        
     let myDot=document.createElement('li')
-    myDot.className='selected';
-    dotContainer.appendChild(myDot)
-    for(i=0; i<list.images.length-1; i++){
+        myDot.className='selected';
+        dotContainer.appendChild(myDot)
+    for(i=1; i<list.images.length; i++){
+        let myImg=document.createElement('img');
+        myImg.className='image';
+        myImg.src=list.images[i];
+        // myImg.style.display="none";
+        imgContainer.appendChild(myImg)
         let myDot=document.createElement('li')
         myDot.className='dot';  
         dotContainer.appendChild(myDot)
-    }
+    };
+    //輪播方法一
+    // myImg.src=list.images[0];
+    // myImg.className='image';
+    // imgContainer.appendChild(myImg);
+    // console.log(list.images.length)
+    // let myDot=document.createElement('li')
+    // myDot.className='selected';
+    // dotContainer.appendChild(myDot)
+    // for(i=0; i<list.images.length-1; i++){
+    //     let myDot=document.createElement('li')
+    //     myDot.className='dot';  
+    //     dotContainer.appendChild(myDot)
+    // }
     });
 // arrow function
 function showCurrent(){
@@ -79,53 +93,65 @@ function showCurrent(){
         let imageNumber=jsonobj.data.images.length;
         
     })
-    
 }
-
 //Left/Right Arrow function
 let minNumber=0;
 let circle=0;
 function leftArrow(){
-    data.then(function(jsonobj){
-    list=jsonobj.data;
-    let maxNumber=list.images.length;
-    console.log(jsonobj.data.images.length)
+    let img=document.querySelectorAll(".image")
+    let activeImg=document.querySelectorAll(".active")
+    let imgCount=img.length+activeImg.length;
+    console.log(imgCount)
+    let maxNumber=imgCount;
     if(minNumber==0){
         minNumber=maxNumber-1;
+        displayChange=0;
     }else{
+        displayChange=minNumber;
         minNumber--;
     };
 //直接一筆一筆清除有變成selected classname的圓點
-    for(i=0; i<list.images.length; i++){
+    for(i=0; i<imgCount; i++){
+        console.log(dotContainer.children[4].className)
         dotContainer.children[i].className='dot'
-    }
+    };
 //把按下左邊箭頭後對應的圖片新增及原點新增classname
-    myImg.src=list.images[minNumber];
+    img[minNumber].setAttribute('id', 'active')
+    console.log("after: "+minNumber)
+    img[displayChange].removeAttribute('id');
+    console.log(displayChange)
+    // myImg.src=list.images[minNumber];
     dotContainer.children[minNumber].className='selected'
     console.log("leftArrow; "+minNumber)
-    });
 };
 
 function rightArrow(){
-    data.then(function(jsonobj){
-    list=jsonobj.data;
-    let maxNumber=list.images.length;
+    let img=document.querySelectorAll(".image")
+    let activeImg=document.querySelectorAll(".active")
+    let imgCount=img.length+activeImg.length;
+    let maxNumber=imgCount;
     console.log("maxnumber: "+maxNumber+", minnumber: "+minNumber)
     if(minNumber==maxNumber-1){
+        displayChange=maxNumber-1;
+        console.log(displayChange)
         minNumber=0;
         console.log(minNumber)
     }else{
+        displayChange=minNumber;
         minNumber++;
     };
     //直接一筆一筆清除有變成selected classname的圓點
-    for(i=0; i<list.images.length; i++){
+    for(i=0; i<imgCount; i++){
         dotContainer.children[i].className='dot'
     }
     //把按下左邊箭頭後對應的圖片新增及原點新增classname
-    myImg.src=list.images[minNumber];
+    img[minNumber].setAttribute('id', 'active');
+    img[displayChange].removeAttribute('id');
+    console.log("after: "+minNumber)
+    
+    // myImg.src=list.images[minNumber];
     dotContainer.children[minNumber].className='selected'
     console.log("rightArrow: "+minNumber)
-    });
 }; 
 
 function feeOption(){
@@ -178,15 +204,13 @@ async function checkStatus(){
     console.log(data.data)
 
     if(data.data==null){
-        signinNav.style.display="list-item";
+        signinNav.style.visibility="visible";
         logoutNav.style.display="none";
     }else{
         signinNav.style.display="none";
         logoutNav.style.display="list-item";
     };
 };
-
-
 //登出 後端設置cookie
 function logout(){
     let src="/api/user";

@@ -47,25 +47,31 @@ section{
     margin:0 auto;
     color:#666666;
     display: flex;
-    margin-top: 3rem;
+    margin-top: 4rem;
     justify-content: space-around;
     align-items: center;
 }
 .rightArrow{
     top: -9rem;
     right:0.8rem;
-    position: relative;
+    position: absolute;
     height:1.8rem;
     opacity: 0.75;
     cursor: pointer;
 }
 .leftArrow{
-    position:relative;
+    position:absolute;
     top:-9rem;
     left:0.8rem;
     height:1.8rem;
     opacity: 0.75;
     cursor: pointer;
+}
+.rightArrow:hover{
+    opacity: 1;
+}
+.leftArrow:hover{
+    opacity: 1;
 }
 .imgContainer{
     width:27rem;
@@ -74,9 +80,28 @@ section{
     flex-flow: column;
     justify-items:center;
 }
+.slideShowContainer{
+    width:27rem;
+    height:20.3rem;
+}
 .image, .img{
     width:27rem;
     height:20.3rem;
+    border-radius: 0.25rem;
+}
+.img{
+    position:relative;
+}
+.image{
+    position:absolute;
+    opacity: 0;
+    transition: opacity .8s;
+}
+#active{
+    width:27rem;
+    height:20.3rem;
+    position:absolute;
+    opacity: 1;
 }
 .icon{
     width:100%;
@@ -88,6 +113,7 @@ section{
 .dotContainer{
     width:90%;
     justify-content: center;
+    position:absolute;
 }
 .dot{
     width:0.6rem;
@@ -331,19 +357,21 @@ form{
     }
     section{
         width:90%;
-        margin-top: 2.5rem;
         justify-content: space-evenly;
     }
     .imgContainer{
         width:45%;
         margin-top: 0;
     }
-    .img{
+    .img, .slideShowContainer{
         width:100%;
     }
     .image{
         width:100%;
         object-fit: cover;
+    }
+    #active{
+        width:100%;
     }
     .booking{
         width:100%;
@@ -363,12 +391,12 @@ form{
     section{
         width:100%;
         flex-flow:wrap;
-        margin-top: 2rem;
+        margin-top: 4rem;
     }
-    .img{
+    .img, .imgContainer, .slideShowContainer{
         width:100%;
     }
-    .image{
+    .image, #active{
         width:100%;
         object-fit: cover;
     }

@@ -44,7 +44,7 @@ li:hover{
 }
 article{
     width:60rem;
-    margin:2rem auto auto auto;
+    margin:2rem auto 1.25rem auto;
     color:#666666;
     font-size: 0.8rem;
     border-bottom: 1px solid #E8E8E8;
@@ -124,9 +124,24 @@ input{
     margin-bottom: 0.75rem;
     border: 1px solid #E8E8E8;
     border-radius: 0.25rem;
+    display:inline-block;
 }
-.password{
-    margin-bottom: 1.25rem;
+input:valid{
+    color:green;
+}
+input:invalid{
+    color:red;
+}
+.tpfield{
+    width:10rem;
+    height:1.9rem;
+    border: 1px solid #E8E8E8;
+    border-radius: 0.25rem;
+}
+.tpfieldContainer{
+    display:flex;
+    align-items: center;
+    margin-bottom: 00.75rem;
 }
 .article_bottom{
     border:0;
@@ -198,34 +213,50 @@ footer{
     border-radius: 0.3rem;
     box-shadow: 0px 4px 60px #AAAAAA;
 }
-.decorationBar{
+.alert_Window{
+    grid-template-rows: 0.5rem 1rem;
+    justify-items: center;
+    position: absolute;
+    top:4rem;
+    left:0;/*把position的空間歸零，讓margin達成置中 */
+    right:0;
     width:17rem;
+    height:6rem;
+    margin:0 auto;
+    background: #FFFFFF;
+    border-radius: 0.3rem;
+    box-shadow: 0px 4px 60px #AAAAAA;
+}
+.decorationBar{
+    width:100%;
     height:0.5rem;
     background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
     border-radius: 0.3rem 0.3rem 0 0;
 }
 .container{
-    width:15.5rem;
+    width:100%;
     display: grid;
-    justify-items: center;
+    justify-content: center;
+    position:relative;
 }
 .HeadContainer{
     width:100%;
-    display:grid;
-    grid-template-columns: 3.75rem 7.2rem 3.75rem 0.8rem;
-    grid-template-areas:". WindowHead . close";
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
     height:1.35rem;
 }
 .WindowHead{
-    grid-area: WindowHead;
     font-size: 1.2rem;
     font-weight: bold;
     color: #666666;
 }
+.alert_message{
+    margin-top:0.5rem;
+}
 .close{
-    grid-area: close;
+    position:absolute;
+    top:0.5rem;
+    right:1rem;
     width:0.8rem;
     height:0.8rem;
     cursor: pointer;

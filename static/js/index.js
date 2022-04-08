@@ -287,7 +287,7 @@ async function checkStatus(){
     console.log(data.data)
 
     if(data.data==null){
-        signinNav.style.display="list-item";
+        signinNav.style.visibility="visible";
         logoutNav.style.display="none";
     }else{
         signinNav.style.display="none";
