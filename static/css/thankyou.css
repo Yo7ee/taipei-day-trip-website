@@ -1,0 +1,94 @@
+*{
+    margin:0;
+    padding:0;
+    border:0;
+}
+html, body, footer{
+    height:100%;
+}
+html{
+    font-size: 20px;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+header{
+    display:flex;
+    justify-content: center;
+    position:fixed;
+    top:0;
+    border-bottom: 1px solid #E8E8E8;
+    background-color: #FFFFFF;
+    width:100%;
+}
+.header{
+    width:60rem;
+    height:2.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+h1{
+    color:#448899;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+ul{
+    list-style:none;
+    display:flex; /* 讓下一個層次將item1-2水平排列 */
+    color:#666666;
+    font-size: 0.8rem ;
+}
+li{
+    transition: text-shadow .3s;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+li:hover{
+    text-shadow: 2px 2px 3px #D8D8D8;
+}
+section{
+    width:60rem;
+    margin:0 auto;
+    color:#666666;
+    display: grid;
+    margin-top: 4rem;
+    justify-items: center;
+}
+p{
+    margin-bottom: 1rem;
+}
+.bookingNumber{
+    font-weight: bold;
+}
+.notice{
+    color:
+}
+footer{
+    background: #757575;
+    color:#FFFFFF;
+    width:100%;
+    display:flex;
+    justify-content: center;
+}
+.footer{
+    margin-top: 2.25rem;
+}
+/* 平板自由發揮 */
+@media (min-width:600px) and (max-width:1200px) {
+    .header{
+        margin:auto 1.5rem;
+    }
+    .signin_Window, .signup_Window{
+        z-index: 100;
+    }
+    section{
+        width:90%;
+    }
+}
+@media (min-width:360px) and (max-width:600px){
+    .header{
+        margin:auto 0.5rem;
+    }
+    section{
+        width:100%;
+    }
+}

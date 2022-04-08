@@ -93,9 +93,7 @@ function showCurrent(){
         let imageNumber=jsonobj.data.images.length;
         
     })
-    
 }
-
 //Left/Right Arrow function
 let minNumber=0;
 let circle=0;
@@ -206,15 +204,13 @@ async function checkStatus(){
     console.log(data.data)
 
     if(data.data==null){
-        signinNav.style.display="list-item";
+        signinNav.style.visibility="visible";
         logoutNav.style.display="none";
     }else{
         signinNav.style.display="none";
         logoutNav.style.display="list-item";
     };
 };
-
-
 //登出 後端設置cookie
 function logout(){
     let src="/api/user";

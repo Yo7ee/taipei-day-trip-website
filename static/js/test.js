@@ -21,3 +21,17 @@ console.log(typeof(page));
 // }else if(page===4){
 //     console.log(4);
 // }
+let result={
+    "data":{
+        "data":{
+            "number":123,
+            "payment":{
+                "message":"123",
+                "status":0
+            }
+        }
+    }
+}
+console.log(result)
+console.log(result.data)
+console.log(result.data.data.payment.status)
