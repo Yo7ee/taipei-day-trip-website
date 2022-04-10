@@ -9,6 +9,7 @@ fetch(src, {method:'GET'}).then(function(response){
     let number=jsonobj[0].data.number;
     if (jsonobj[0].data.status==0){
         bookingNumber.textContent=number;
+        deleteBooking();
     }
     else{
         bookingNumber.textContent=number+" 付款失敗，請於現場繳費"
@@ -32,3 +33,22 @@ async function checkStatus(){
         logoutNav.style.display="list-item";
     };
 };
+
+async function deleteBooking(){
+    let cookie=document.cookie
+    let src="/api/booking";
+    const response= await fetch(src, {method:"DELETE", headers:{'cookie':cookie}});
+    const data= await response.json();
+    if (response.status==200){
+        booked.style.display="none";
+        none_booked.style.display="block";
+        html.style.height="100%";
+        body.style.height="100%";
+        footer.style.height="100%";
+        
+        checkStatus();
+    }else{
+        signinNav.style.display="list-item";
+        logoutNav.style.display="none";
+    }
+}

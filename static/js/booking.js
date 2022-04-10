@@ -1,6 +1,8 @@
 checkStatus();
 getBooking();
 
+let none_booked=document.querySelector(".none_booked");
+let booked=document.querySelector(".booked");
 //檢查會員登入狀態流程
 async function checkStatus(){
     let src="/api/user";
@@ -36,8 +38,7 @@ async function getBooking(){
     let src="/api/booking";
     let cookie=document.cookie
     console.log(cookie)
-    let none_booked=document.querySelector(".none_booked");
-    let booked=document.querySelector(".booked");
+
     let attractionName=document.querySelector("div.attractionName")
     let date=document.querySelector(".date")
     let time=document.querySelector(".time")
@@ -75,9 +76,6 @@ async function getBooking(){
 }
 
 async function deleteBooking(){
-    let none_booked=document.querySelector(".none_booked");
-    let booked=document.querySelector(".booked");
-    
     let cookie=document.cookie
     let src="/api/booking";
     const response= await fetch(src, {method:"DELETE", headers:{'cookie':cookie}});
