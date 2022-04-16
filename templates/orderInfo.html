@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <head>
-    <title>預定行程</title>
+    <title>付款行程</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-    <link href="{{url_for('static', filename='css/booking.css')}}" type="text/css" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/orderInfo.css')}}" type="text/css" rel="stylesheet">
     <script src="../static/js/window.js" defer></script>
-    <script src="../static/js/booking.js" defer></script>
-    <script src="https://js.tappaysdk.com/tpdirect/v5.9.0"></script>    
-    <script src="../static/js/tappay.js" defer></script>
+    <script src="../static/js/orderInfo.js" defer></script>
+
 </head>
 <body>
     <header>
@@ -19,9 +18,8 @@
             <nav>
                 <ul>
                     <li class="bookNav" onclick="bookCheck();">預定行程</li>
-                    <li class="signinNav" onclick="showSignin();" style="visibility: hidden;">登入/註冊</li>
+                    <li class="signinNav" onclick="showSignin();">登入/註冊</li>
                     <li class="memberNav" onclick="member();" style="display:none">會員中心</li>
-                    <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
                 </ul>
             </nav>
         </div>
@@ -30,10 +28,11 @@
         <div class="title_box">
             <p class="first title">您好，</p>
             <div class="userName"></div>
-            <p class="first title">，待預定的行程如下：</p>
+            <p class="first title">，訂單編號：</p>
+            <div class="orderNumber"></div>
+            <p class="first title">，行程如下：</p>
         </div>
     </div>
-    <div class="booked" style="visibility: hidden;">
         <article class="booking_schedule">
             <div class="booking_schedule_container">
                 <div class="content_container">
@@ -49,43 +48,9 @@
                             <p class="schedule_title">地點：</p><div class="address"></div>
                         </div>
                     </div>
-                    <img onclick="deleteBooking();" class="delete" src="/static/icon/icon_delete.png">
                 </div>
             </div>
         </article>
-        <article>
-            <div class="booking_schedule_container">
-                <p class="title">您的聯絡資訊</p>
-                <form class="contactForm" method="POST">
-                    <div>聯絡姓名：<input name="name" required></div>
-                    <div>聯絡信箱：<input type="email" name="email" required></div>
-                    <div>手機號碼：<input type="tel" name="mobilePhone" placeholder="0912123123" pattern="[0-9]{10}" required></div>
-                </form>
-                <p class="notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
-            </div>
-        </article>
-        <article>
-            <div class="booking_schedule_container">
-                <p class="title">信用卡付款資訊</p>
-                <form method="POST">
-                    <div class="tpfieldContainer">卡片號碼：<div class="tpfield" id="card-number"></div></div>
-                    <div class="tpfieldContainer">過期時間：<div class="tpfield" id="card-expiration-date"></div></div>
-                    <div class="tpfieldContainer">驗證密碼：<div class="tpfield" id="card-ccv"></div></div>
-                </form>
-            </div>
-        </article>
-        <article class="article_bottom">
-            <div class="booking_schedule_container">
-            <p class="total_price">總價：</p>
-            <button class="pay" onclick="pay();">確認訂購並付款</button>
-            </div>
-        </article>
-    </div>
-    <div class="none_booked" style="display:none">
-        <div class="none_booked_container">
-            <p class="none_booked_content">目前沒有任何待預定的行程</p>
-        </div>
-    </div>
     <footer>
         <div class="footer">COPYRIGHT©2021 台北一日遊</div>
     </footer>

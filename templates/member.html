@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+    <title>預定行程</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/member.css')}}" type="text/css" rel="stylesheet">
+    <script src="../static/js/member.js" defer></script>
+    <script src="../static/js/window.js" defer></script>
+
+
+</head>
+<body>
+    <header>
+        <div class="header">
+            <h1 onclick="backtohome();">台北一日遊</h1>
+            <nav>
+                <ul>
+                    <li class="bookNav" onclick="bookCheck();">預定行程</li>
+                    <li class="logoutNav" onclick="logout();" style="visibility:hidden">登出系統</li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <p class="content_title">會員資料</p>
+        <div class="member_container">
+            <div class="member_title">名稱：</div><div class="name"></div>
+            <div class="member_title">信箱：</div><div class="email"></div>
+            <!-- <div class="member_title">密碼：</div><input class="password" type="password"> -->
+        </div>
+    </main>
+    <p class="content_title">訂單明細</p>
+    <div class="booked" style="display: block;">
+        <article class="booking_schedule">
+            <div class="schedule_title_container">
+                <p class="orderInfo">訂單編號</p>
+                <p class="orderInfo">價錢</p>
+            </div>
+        </article>
+    </div>
+        <div class="none_booked" style="display:none">
+            <div class="none_booked_container">
+                <p class="none_booked_content">目前沒有任何已付款的行程</p>
+            </div>
+        </div>
+    <footer>
+        <div class="footer">COPYRIGHT©2021 台北一日遊</div>
+    </footer>
+    <div class="cover" style="display:none"></div>
+    <div class="signin_Window" style="display:none">
+        <div class="decorationBar"></div>
+        <div class="container">
+            <div class="HeadContainer">
+                <div class="WindowHead">登入會員帳號</div>
+                <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
+            </div>
+            <form class="signinForm" method="PATCH">
+                <input class="input_window" name="email" placeholder="輸入電子郵件">
+                <input type="password" class="input_window" name="password" placeholder="輸入密碼">
+            </form>
+            <button onclick="signin();" class="signin_up">登入帳戶</button>
+            <div class="signin message"></div>
+            <a onclick="showSignup();" class="a_switch">還沒有帳戶?點此註冊</a>
+        </div>
+    </div>
+    <div class="signup_Window" style="display:none">
+        <div class="decorationBar"></div>
+        <div class="container">
+            <div class="HeadContainer">
+                <div class="WindowHead">註冊會員帳號</div>
+                <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
+            </div>
+            <form class="signupForm" method="POST">
+                <input class="input_window" name="name" placeholder="輸入姓名">
+                <input class="input_window" name="email" placeholder="輸入電子郵件" required>
+                <input type="password" class="input_window" name="password" placeholder="輸入密碼">
+            </form>
+            <button onclick="signup();" class="signin_up">註冊新帳戶</button>
+            <div class="signup message"></div>
+            <a onclick="showSignin();" class="a_switch">已經有帳戶了?點此登入</a>
+        </div>
+    </div>
+</body>
+</html>
