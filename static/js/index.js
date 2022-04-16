@@ -2,17 +2,18 @@ let article=document.querySelector('article');
 let nextPage=0;
 let src="/api/attractions/?page="+nextPage;
 
+
 //檢查會員登入狀態流程
 checkStatus();
-
+showLoading();
 const data = 
 fetch(src, {method:'get'}).then(function(response){
     return response.json();
 });
 console.log(data)
-
 data.then(function(refreshData){
     console.log(refreshData)
+    hideLoading();
     nextPage=refreshData.nextPage
     console.log("first fetch")
     for (let i=0; i<12; i++){
@@ -116,9 +117,10 @@ async function scrollLoadMore(){
         let keyword=document.querySelector("input").value;
         let freshSrc="/api/attractions/?page="+nextPage+"&keyword="+keyword;
         if (typeof(nextPage)=="number"){
+            showLoading();
             const response=await fetch(freshSrc);
             const refreshData=await response.json();
-
+            hideLoading();
             nextPage=refreshData.nextPage
             console.log("second"+nextPage)
             for (let i=0; i<refreshData.data.length; i++){
@@ -237,38 +239,37 @@ function searchKeyword(){
             if (typeof(nextPage)=="number"){
                 const response=await fetch(freshSrc);
                 const refreshData=await response.json();
-
-                    nextPage=refreshData.nextPage
-                    console.log("second"+nextPage)
-                    for (let i=0; i<refreshData.data.length; i++){
-                    let list=refreshData.data;
-                    let myfigure=document.createElement('figure');
-                    let a=document.createElement('a')
-                    let id=list[i].id;
-                    a.href='/attraction/'+id
-                    let myimg=document.createElement('img');
-                    let myfigcaption=document.createElement('figcaption');
-                    let divName=document.createElement('div');
-                    divName.className='name';
-                    let divFig1=document.createElement('div');
-                    divFig1.className='figcaption1';
-                    let divMrt=document.createElement('div');
-                    divMrt.className='mrt';
-                    let divCategory=document.createElement('div');
-                    divCategory.className='category';
-                    myimg.src=list[i].images[0];
-                    divName.textContent=list[i].name;
-                    divMrt.textContent=list[i].mrt;
-                    divCategory.textContent=list[i].category;
-                    divFig1.appendChild(divMrt);
-                    divFig1.appendChild(divCategory);
-                    myfigcaption.appendChild(divName);
-                    myfigcaption.appendChild(divFig1);
-                    myfigure.appendChild(myimg);
-                    myfigure.appendChild(myfigcaption);
-                    a.appendChild(myfigure)
-                    article.appendChild(a);
-                    };
+                nextPage=refreshData.nextPage
+                console.log("second"+nextPage)
+                for (let i=0; i<refreshData.data.length; i++){
+                let list=refreshData.data;
+                let myfigure=document.createElement('figure');
+                let a=document.createElement('a')
+                let id=list[i].id;
+                a.href='/attraction/'+id
+                let myimg=document.createElement('img');
+                let myfigcaption=document.createElement('figcaption');
+                let divName=document.createElement('div');
+                divName.className='name';
+                let divFig1=document.createElement('div');
+                divFig1.className='figcaption1';
+                let divMrt=document.createElement('div');
+                divMrt.className='mrt';
+                let divCategory=document.createElement('div');
+                divCategory.className='category';
+                myimg.src=list[i].images[0];
+                divName.textContent=list[i].name;
+                divMrt.textContent=list[i].mrt;
+                divCategory.textContent=list[i].category;
+                divFig1.appendChild(divMrt);
+                divFig1.appendChild(divCategory);
+                myfigcaption.appendChild(divName);
+                myfigcaption.appendChild(divFig1);
+                myfigure.appendChild(myimg);
+                myfigure.appendChild(myfigcaption);
+                a.appendChild(myfigure)
+                article.appendChild(a);
+                };
             }else{
                 return window.event=false
             };//如果不行，改試return document.event.returnValue=false，此為終止已經被觸發的document事件
@@ -280,7 +281,7 @@ function searchKeyword(){
 async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
-    let logoutNav=document.querySelector('.logoutNav');
+    let memberNav=document.querySelector('.memberNav');
     console.log(document.cookie)
     const response=await fetch(src, {method:'GET'});
     const data=await response.json();
@@ -291,15 +292,8 @@ async function checkStatus(){
         logoutNav.style.display="none";
     }else{
         signinNav.style.display="none";
-        logoutNav.style.display="list-item";
+        memberNav.style.display="list-item";
     };
 };
 
-//登出 後端設置cookie
-function logout(){
-    let src="/api/user";
-    fetch(src, {method:'DELETE'}).then(function(response){
-        return response.json();
-    });
-    location.assign(location.href)
-};
+

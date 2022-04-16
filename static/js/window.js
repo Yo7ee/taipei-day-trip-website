@@ -75,23 +75,33 @@ function signup(){
     let signupForm=document.querySelector(".signupForm")
     console.log(signupForm)
     let formData=new FormData(signupForm)
-    console.log(formData)
+    console.log(signupForm.email.value)
     let message=document.querySelector(".signup")
-    let data=fetch(src, {method:'POST', body:formData}).then(function(response){
-        return response.json()
-    });
-    data.then(function(object){
-        console.log(object[0].message)
-        let result=object[0].message
-        message.textContent=result
-    });
+    let valid=0;
+    if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(signupForm.email.value)){
+        valid++;
+    }
+    else{
+        message.textContent="email格式錯誤";
+    }
+    if(valid===1){
+        let data=fetch(src, {method:'POST', body:formData}).then(function(response){
+            return response.json()
+        });
+        data.then(function(object){
+            console.log(object[0].message)
+            let result=object[0].message
+            message.textContent=result
+        });
+    }
+
 };
 
 //檢查會員登入狀態流程
 async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
-    let logoutNav=document.querySelector('.logoutNav');
+    let memberNav=document.querySelector('.memberNav');
     let cookie=document.cookie
     console.log("checkStatus: "+cookie)
     const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}});
@@ -99,11 +109,11 @@ async function checkStatus(){
     console.log(data.data)
 
     if(data.data==null){
-        signinNav.style.visibility="visible";
-        logoutNav.style.display="none";
+        signinNav.style.display="list-item";
+        memberNav.style.display="none";
     }else{
         signinNav.style.display="none";
-        logoutNav.style.display="list-item";
+        memberNav.style.display="list-item";
     };
 };
 
@@ -113,14 +123,20 @@ function logout(){
     console.log("logout")
     fetch(src, {method:'DELETE'}).then(function(response){
         return response.json();
-    });
-    location.assign("/")
+    }).then(function(){
+        location.assign("/")
+    })
 };
 
 //回首頁
 function backtohome(){
     location.assign("/")
 };
+
+//至會員中心
+function member(){
+    location.assign("/member")
+}
 
 //預定行程
 async function bookCheck(){
@@ -137,6 +153,17 @@ async function bookCheck(){
     }else{
         location.assign("/booking")
     }
+}
+//show loading 
+function showLoading(){
+    let loading=document.querySelector("#loading");
+    loading.className="display";
+    console.log("showLoading")
+    console.log(loading.style)
+}
 
-
+//hide loading
+function hideLoading(){
+    console.log("hideLoading")
+    loading.className="";
 }
