@@ -7,8 +7,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <link href="{{url_for('static', filename='css/thankyou.css')}}" type="text/css" rel="stylesheet">
-    <script src="../static/js/thankyou.js" defer></script>
     <script src="../static/js/window.js" defer></script>
+    <script src="../static/js/thankyou.js" defer></script>
+
 </head>
 <header>
     <div class="header">
@@ -16,8 +17,8 @@
         <nav>
             <ul>
                 <li class="bookNav" onclick="bookCheck();">預定行程</li>
-                <li class="signinNav" onclick="showSignin();" style="display:list-item">登入/註冊</li>
-                <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
+                <li class="signinNav" onclick="showSignin();" style="display:none">登入/註冊</li>
+                <li class="memberNav" onclick="member();" style="display:none">會員中心</li>
             </ul>
         </nav>
     </div>
@@ -25,7 +26,7 @@
 <section>
     <p>行程預定成功</p>
     <p>你的訂單編號如下</p>
-    <p class="bookingNumber">123</p>
+    <p class="bookingNumber"></p>
     <p class="notice">請記住此編號，或到會員中心查詢歷史訂單</p>
 </section>
 <footer>

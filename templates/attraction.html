@@ -7,8 +7,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/attraction.css')}}" type="text/css" rel="stylesheet">
-    <script src="../static/js/attraction.js" defer></script>
     <script src="../static/js/window.js" defer></script>
+    <script src="../static/js/attraction.js" defer></script>
+
 
 </head>
 <body>
@@ -19,6 +20,7 @@
                 <ul>
                     <li class="bookNav" onclick="bookCheck();">預定行程</li>
                     <li class="signinNav" onclick="showSignin();" style="visibility:hidden">登入/註冊</li>
+                    <li class="memberNav" onclick="member();" style="display:none">會員中心</li>
                     <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
                 </ul>
             </nav>
@@ -38,8 +40,8 @@
             </div>
         </div>
         <div class="content">
-            <div class="name">平安鐘</div>
-            <div class="category">公共藝術 </div>at<div class="mrt"> 忠孝復興</div>
+            <div class="name"></div>
+            <div class="category"></div>at<div class="mrt"></div>
             <div class="booking">
                 <div class="booking_1">訂購導覽行程</div>
                 <div class="booking_2">以此景點為中心的一日行程，帶您探索城市角落故事</div>
@@ -64,6 +66,7 @@
         <span>景點地址：</span><p class="p_address">臺北市 大安區忠孝東路4段</p>
         <span>交通方式：</span><p class="p_transport">捷運站名：忠孝復興站4號出口1.公車：204、212、212直、232、232副、262、262(區間)、278、299、521、605、605(副)、605(新台五線)、667、903、忠孝新幹線至頂好市場站 2.車位：太平洋崇光百貨地下停車場或市民大道附近地下停車場</p>
     </article>
+    
     <footer>
         <div class="footer">COPYRIGHT©2021 台北一日遊</div>
     </footer>

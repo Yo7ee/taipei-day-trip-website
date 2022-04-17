@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <head>
-    <title>台北一日遊</title>
+    <title>預定行程</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css')}}" type="text/css" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/member.css')}}" type="text/css" rel="stylesheet">
+    <script src="../static/js/member.js" defer></script>
     <script src="../static/js/window.js" defer></script>
-    <script src="../static/js/index.js" defer></script>
-    
+
+
 </head>
 <body>
     <header>
@@ -18,35 +19,33 @@
             <nav>
                 <ul>
                     <li class="bookNav" onclick="bookCheck();">預定行程</li>
-                    <li class="signinNav" onclick="showSignin();" style="visibility:hidden">登入/註冊</li>
-                    <li class="memberNav" onclick="member();" style="display:none">會員中心</li>
-                    <li class="logoutNav" onclick="logout();" style="display:none">登出系統</li>
+                    <li class="logoutNav" onclick="logout();" style="visibility:hidden">登出系統</li>
                 </ul>
             </nav>
         </div>
     </header>
-    <section>
-        <main>
-            <div class="textcontent">
-            <h2>輕鬆享受台北一日悠閒</h2>
-            <p>探索每個角落，體驗城市的深度旅遊行程</p>
-                <div class="searchbar">
-                    <input class="input_search" type="text" name="name" placeholder=" 輸入景點名稱查詢">
-                    <button onclick="searchKeyword();"><img class="search" src="/static/icon/icon_search.png"></button>
-                </div>
+    <main>
+        <p class="content_title">會員資料</p>
+        <div class="member_container">
+            <div class="member_title">名稱：</div><div class="name"></div>
+            <div class="member_title">信箱：</div><div class="email"></div>
+            <!-- <div class="member_title">密碼：</div><input class="password" type="password"> -->
+        </div>
+    </main>
+    <p class="content_title">訂單明細</p>
+    <div class="booked" style="display: block;">
+        <article class="booking_schedule">
+            <div class="schedule_title_container">
+                <p class="orderInfo">訂單編號</p>
+                <p class="orderInfo">價錢</p>
             </div>
-        </main>
-    </section>
-
-    <article>
-
-    </article>
-    <div id="loading">
-
+        </article>
     </div>
-    <div class="noResult">
-
-    </div>
+        <div class="none_booked" style="display:none">
+            <div class="none_booked_container">
+                <p class="none_booked_content">目前沒有任何已付款的行程</p>
+            </div>
+        </div>
     <footer>
         <div class="footer">COPYRIGHT©2021 台北一日遊</div>
     </footer>
@@ -59,11 +58,10 @@
                 <img onclick="cross();" class="close" src="/static/icon/icon_close.png">
             </div>
             <form class="signinForm" method="PATCH">
-                <input type="email" class="input_window" name="email" placeholder="輸入電子郵件" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" required>
+                <input class="input_window" name="email" placeholder="輸入電子郵件">
                 <input type="password" class="input_window" name="password" placeholder="輸入密碼">
             </form>
             <button onclick="signin();" class="signin_up">登入帳戶</button>
-            
             <div class="signin message"></div>
             <a onclick="showSignup();" class="a_switch">還沒有帳戶?點此註冊</a>
         </div>
@@ -77,16 +75,13 @@
             </div>
             <form class="signupForm" method="POST">
                 <input class="input_window" name="name" placeholder="輸入姓名">
-                <input type="email" class="input_window" name="email" placeholder="輸入電子郵件" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" required>
+                <input class="input_window" name="email" placeholder="輸入電子郵件" required>
                 <input type="password" class="input_window" name="password" placeholder="輸入密碼">
             </form>
             <button onclick="signup();" class="signin_up">註冊新帳戶</button>
-            
             <div class="signup message"></div>
             <a onclick="showSignin();" class="a_switch">已經有帳戶了?點此登入</a>
         </div>
     </div>
 </body>
-
-
 </html>

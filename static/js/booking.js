@@ -1,11 +1,13 @@
 checkStatus();
 getBooking();
 
+let none_booked=document.querySelector(".none_booked");
+let booked=document.querySelector(".booked");
 //檢查會員登入狀態流程
 async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
-    let logoutNav=document.querySelector('.logoutNav');
+    let memberNav=document.querySelector('.memberNav');
     let cookie=document.cookie
     console.log("checkStatus: "+cookie)
     const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}});
@@ -16,14 +18,14 @@ async function checkStatus(){
         location.assign("/")
     }else{
         signinNav.style.display="none";
-        logoutNav.style.display="list-item";
+        memberNav.style.display="list-item";
         let name=data.data.name;
         console.log(name)
         let userName=document.querySelector(".userName")
         userName.textContent=name;
     }
 };
-
+//取得使用者名稱
 let src="/api/user";
 const nameData=fetch(src, {method:'GET'}).then(function(response){
     return response.json()});
@@ -36,8 +38,7 @@ async function getBooking(){
     let src="/api/booking";
     let cookie=document.cookie
     console.log(cookie)
-    let none_booked=document.querySelector(".none_booked");
-    let booked=document.querySelector(".booked");
+
     let attractionName=document.querySelector("div.attractionName")
     let date=document.querySelector(".date")
     let time=document.querySelector(".time")
@@ -75,9 +76,6 @@ async function getBooking(){
 }
 
 async function deleteBooking(){
-    let none_booked=document.querySelector(".none_booked");
-    let booked=document.querySelector(".booked");
-    
     let cookie=document.cookie
     let src="/api/booking";
     const response= await fetch(src, {method:"DELETE", headers:{'cookie':cookie}});
@@ -92,6 +90,6 @@ async function deleteBooking(){
         checkStatus();
     }else{
         signinNav.style.display="list-item";
-        logoutNav.style.display="none";
+        memberNav.style.display="none";
     }
 }

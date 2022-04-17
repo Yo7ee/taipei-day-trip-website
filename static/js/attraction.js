@@ -33,6 +33,7 @@ let Day=tomorrowFormat.split('/')[2];
 let minDate=Year+'-'+Month+'-'+Day;
 date.min=minDate;
 
+
 //show attraction and put first image on the page
 let path=location.pathname;
 let id=path.split("/")[2] //path=>/attraction/3, path.split("/")=>('','attraction', '3')
@@ -197,7 +198,7 @@ async function booking_created(){
 async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
-    let logoutNav=document.querySelector('.logoutNav');
+    let memberNav=document.querySelector('.memberNav');
     console.log(document.cookie)
     const response=await fetch(src, {method:'GET'});
     const data=await response.json();
@@ -205,17 +206,9 @@ async function checkStatus(){
 
     if(data.data==null){
         signinNav.style.visibility="visible";
-        logoutNav.style.display="none";
+        memberNav.style.display="none";
     }else{
         signinNav.style.display="none";
-        logoutNav.style.display="list-item";
+        memberNav.style.display="list-item";
     };
-};
-//登出 後端設置cookie
-function logout(){
-    let src="/api/user";
-    fetch(src, {method:'DELETE'}).then(function(response){
-        return response.json();
-    });
-    location.assign(location.href)
 };
