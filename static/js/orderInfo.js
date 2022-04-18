@@ -8,7 +8,6 @@ async function getOrderInfo(){
     const data=await fetch(src).then(function(response){
         return response.json();
     });
-    console.log(data[0].data);
     let list=data[0].data;
 
     let userName=document.querySelector(".userName");
