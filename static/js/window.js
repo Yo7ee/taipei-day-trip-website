@@ -39,9 +39,6 @@ async function signin(){
     let message=document.querySelector(".signin")
     let response=await fetch(src, {method:'PATCH', body:formData});
     let data=await response.json();
-    console.log(document.cookie)
-    console.log(data)
-    console.log(data.message)
     let result=data.message;
     if(result==undefined){
         location.assign(location.href)
