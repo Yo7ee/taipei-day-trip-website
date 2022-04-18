@@ -3,28 +3,7 @@ getBooking();
 
 let none_booked=document.querySelector(".none_booked");
 let booked=document.querySelector(".booked");
-//檢查會員登入狀態流程
-async function checkStatus(){
-    let src="/api/user";
-    let signinNav=document.querySelector('.signinNav');
-    let memberNav=document.querySelector('.memberNav');
-    let cookie=document.cookie
-    console.log("checkStatus: "+cookie)
-    const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}});
-    const data=await response.json();
-    console.log(data.data)
 
-    if(data.data==null){
-        location.assign("/")
-    }else{
-        signinNav.style.display="none";
-        memberNav.style.display="list-item";
-        let name=data.data.name;
-        console.log(name)
-        let userName=document.querySelector(".userName")
-        userName.textContent=name;
-    }
-};
 //取得使用者名稱
 let src="/api/user";
 const nameData=fetch(src, {method:'GET'}).then(function(response){
@@ -36,25 +15,21 @@ let footer=document.querySelector("footer");
 //取得訂單內容並顯示在網頁
 async function getBooking(){
     let src="/api/booking";
-    let cookie=document.cookie
-    console.log(cookie)
-
-    let attractionName=document.querySelector("div.attractionName")
-    let date=document.querySelector(".date")
-    let time=document.querySelector(".time")
-    let price=document.querySelector(".price")
-    let address=document.querySelector(".address")
-    let attractionImage=document.querySelector(".attractionImage")
-    let userName=document.querySelector(".userName")
-    let totalPrice=document.querySelector(".total_price")
-    console.log(userName)
+    let cookie=document.cookie;
+    let attractionName=document.querySelector("div.attractionName");
+    let date=document.querySelector(".date");
+    let time=document.querySelector(".time");
+    let price=document.querySelector(".price");
+    let address=document.querySelector(".address");
+    let attractionImage=document.querySelector(".attractionImage");
+    let userName=document.querySelector(".userName");
+    let totalPrice=document.querySelector(".total_price");
     const response=await fetch(src, {method:"GET", headers:{'cookie':cookie}})
     const data=await response.json();
     let result=data[0].data;
-    console.log(result)
     nameData.then(function(object){
-        let name=object.data.name
-        console.log(name)
+        let name=object.data.name;
+        userName.textContent=name;
         if (result==undefined){
             booked.style.display="none";
             none_booked.style.display="block";
@@ -70,13 +45,13 @@ async function getBooking(){
             price.textContent=result.price;
             address.textContent=result.attraction.address;
             attractionImage.src=result.attraction.images;
-            totalPrice.textContent="總價： " + result.price + " 元"
+            totalPrice.textContent="總價： " + result.price + " 元";
         }
     })
 }
 
 async function deleteBooking(){
-    let cookie=document.cookie
+    let cookie=document.cookie;
     let src="/api/booking";
     const response= await fetch(src, {method:"DELETE", headers:{'cookie':cookie}});
     const data= await response.json();
@@ -86,7 +61,7 @@ async function deleteBooking(){
         html.style.height="100%";
         body.style.height="100%";
         footer.style.height="100%";
-        
+
         checkStatus();
     }else{
         signinNav.style.display="list-item";

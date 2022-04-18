@@ -2,7 +2,6 @@ getOrderInfo();
 checkStatus();
 
 async function getOrderInfo(){
-    console.log("test")
     let path=location.pathname;
     let bookingNumber=path.split("/")[2];
     let src="/api/member/"+bookingNumber;
@@ -18,10 +17,10 @@ async function getOrderInfo(){
     let orderNumber=document.querySelector(".orderNumber");
     orderNumber.textContent=bookingNumber;
 
-    let attractionImage=document.querySelector(".attractionImage")
-    attractionImage.src=list.attraction.images
+    let attractionImage=document.querySelector(".attractionImage");
+    attractionImage.src=list.attraction.images;
 
-    let attractionName=document.querySelector("div.attractionName")
+    let attractionName=document.querySelector("div.attractionName");
     attractionName.textContent=list.attraction.name;
 
     let date=document.querySelector(".date");
@@ -35,6 +34,4 @@ async function getOrderInfo(){
 
     let address=document.querySelector(".address")
     address.textContent=list.attraction.address;
-
-
 }
