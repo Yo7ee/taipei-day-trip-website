@@ -1,7 +1,7 @@
-let bookingNumber=document.querySelector(".bookingNumber")
-let number=location.href.split("=")[1]
-let src="/api/order/"+number
-console.log(src)
+let bookingNumber=document.querySelector(".bookingNumber");
+let number=location.href.split("=")[1];
+let src="/api/order/"+number;
+
 checkStatus();
 fetch(src, {method:'GET'}).then(function(response){
     return response.json();
@@ -12,12 +12,12 @@ fetch(src, {method:'GET'}).then(function(response){
         deleteBooking();
     }
     else{
-        bookingNumber.textContent=number+" 付款失敗，請於現場繳費"
+        bookingNumber.textContent=number+" 付款失敗，請於現場繳費";
     }
 });
 
 async function deleteBooking(){
-    let cookie=document.cookie
+    let cookie=document.cookie;
     let src="/api/booking";
     const response= await fetch(src, {method:"DELETE", headers:{'cookie':cookie}});
     const data= await response.json();

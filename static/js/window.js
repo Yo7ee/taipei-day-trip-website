@@ -31,37 +31,14 @@ function cross(){
     checkStatus();
 };
 
-//登入 前端設置cookie
-// async function signin(){
-//     let src="/api/user";
-//     let signinForm=document.querySelector(".signinForm")
-//     let formData=new FormData(signinForm)
-//     let message=document.querySelector(".signin")
-//     let response=await fetch(src, {method:'PATCH', body:formData});
-//     let data=await response.json();
-//     tokenValue=data[0].token;
-//     document.cookie='access_token='+tokenValue;
-//     console.log(document.cookie)
-//     let result=data[0].message;
-//     if(result==undefined){
-//         location.assign(location.href)
-//     }else{
-//         message.textContent=result
-//     };
-// };
-
 //登入 後端設置cookie
 async function signin(){
     let src="/api/user";
     let signinForm=document.querySelector(".signinForm")
     let formData=new FormData(signinForm)
-    console.log(formData)
     let message=document.querySelector(".signin")
     let response=await fetch(src, {method:'PATCH', body:formData});
     let data=await response.json();
-    console.log(document.cookie)
-    console.log(data)
-    console.log(data.message)
     let result=data.message;
     if(result==undefined){
         location.assign(location.href)
@@ -72,11 +49,9 @@ async function signin(){
 
 function signup(){
     let src="/api/user";
-    let signupForm=document.querySelector(".signupForm")
-    console.log(signupForm)
-    let formData=new FormData(signupForm)
-    console.log(signupForm.email.value)
-    let message=document.querySelector(".signup")
+    let signupForm=document.querySelector(".signupForm");
+    let formData=new FormData(signupForm);
+    let message=document.querySelector(".signup");
     let valid=0;
     if (/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(signupForm.email.value)){
         valid++;
@@ -86,15 +61,13 @@ function signup(){
     }
     if(valid===1){
         let data=fetch(src, {method:'POST', body:formData}).then(function(response){
-            return response.json()
+            return response.json();
         });
         data.then(function(object){
-            console.log(object[0].message)
-            let result=object[0].message
-            message.textContent=result
+            let result=object[0].message;
+            message.textContent=result;
         });
-    }
-
+    };
 };
 
 //檢查會員登入狀態流程
@@ -102,11 +75,9 @@ async function checkStatus(){
     let src="/api/user";
     let signinNav=document.querySelector('.signinNav');
     let memberNav=document.querySelector('.memberNav');
-    let cookie=document.cookie
-    console.log("checkStatus: "+cookie)
+    let cookie=document.cookie;
     const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}});
     const data=await response.json();
-    console.log(data.data)
 
     if(data.data==null){
         signinNav.style.display="list-item";
@@ -120,50 +91,44 @@ async function checkStatus(){
 //登出 後端設置cookie
 function logout(){
     let src="/api/user";
-    console.log("logout")
     fetch(src, {method:'DELETE'}).then(function(response){
         return response.json();
     }).then(function(){
-        location.assign("/")
+        location.assign("/");
     })
 };
 
 //回首頁
 function backtohome(){
-    location.assign("/")
+    location.assign("/");
 };
 
 //至會員中心
 function member(){
-    location.assign("/member")
+    location.assign("/member");
 }
 
 //預定行程
 async function bookCheck(){
     let src="/api/user";
-    let cookie=document.cookie
-    console.log(cookie)
-    const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}})
+    let cookie=document.cookie;
+    const response=await fetch(src, {method:'GET', headers:{'cookie':cookie}});
     const data=await response.json();
-    console.log(data.data)
-    result=data.data;
+    const result=data.data;
     if (result==null){
         signIn.style.display="grid";
         cover.style.display="grid";
     }else{
-        location.assign("/booking")
+        location.assign("/booking");
     }
 }
 //show loading 
 function showLoading(){
     let loading=document.querySelector("#loading");
     loading.className="display";
-    console.log("showLoading")
-    console.log(loading.style)
 }
 
 //hide loading
 function hideLoading(){
-    console.log("hideLoading")
     loading.className="";
 }

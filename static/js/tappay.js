@@ -61,7 +61,7 @@ TPDirect.card.setup({
 function alert(message){
     cover.style.display="grid";
     alert_Window.style="grid";
-    let alert_message=document.querySelector(".alert_message")
+    let alert_message=document.querySelector(".alert_message");
     alert_message.textContent=message;
 }
 
@@ -70,18 +70,17 @@ function pay(event){
     //check can or cannot getPrime
     if(tappayStatus.canGetPrime===false){
         console.log("cannot get prime")
-        alert("請確認信用卡資料")
-        return 
+        alert("請確認信用卡資料");
+        return
     }
 
     //get prime
     TPDirect.card.getPrime(async(result)=>{
         if (result.status !==0){
             console.log("get prime error" + result.msg)
-            alert("請確認信用卡資料")
+            alert("請確認信用卡資料");
             return 
         };
-        console.log("get prime success, prime: "+ result.card.prime)
         prime=result.card.prime;
         let src="/api/orders";
         let contactForm=document.querySelector('.contactForm');
@@ -99,9 +98,9 @@ function pay(event){
         let data=await response.json();
         if (data[0].message==="訂單建立失敗，請確認聯絡資訊"){
             // 訂單建立失敗，聯絡資訊輸入錯誤，回到當前頁面
-            alert("訂單建立失敗，請確認聯絡資訊")
+            alert("訂單建立失敗，請確認聯絡資訊");
         }else if(data[0].error){
-            alert("請先登入")
+            alert("請先登入");
         }
         else{
             let number=data[0].data.number;
