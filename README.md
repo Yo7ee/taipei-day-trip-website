@@ -15,7 +15,8 @@
 
 ## Live Demo
 
-http://3.224.188.5:3000/</br>
+http://3.224.188.5:3000/
+
 **Test Account**</br>
 | - | - |
 |----|----|
@@ -40,27 +41,53 @@ After the weekly development is completed, will sent Pull Request to the Reviewe
 
 ![Imgur](https://i.imgur.com/o7TuGxY.png)
 
+The project adopts a development method that separation of front-end and back-end. Through the RESTful API, different data is obtained from the back-end according to the Request method sent by the front-end.
+
+專案採用前後端分離的開發方式，透過 RESTful API，根據前端發送的 Request 方法，向後端取得不同的資料。
+
+:exclamation:Developed according to the specification of RESTful API（Not involved in planning)
+
 ## Features
 
-### :one: Lazy Loading & Infinite Scroll
+### :one: **Lazy Loading & Infinite Scroll**
+
+Apply window scroll event to practice lazy loading and infinite scroll. By delaying loading, to make resource loading when needed, which reduces the loading burden of the browser and improves the user experience.
+
+使用 window scroll event 實踐 Lazy Loading 和 Infinite Scroll。透過延遲，在需要時才載入所需資源，降低瀏覽器載入負擔，提升使用者體驗。
 
 ![Imgur](https://i.imgur.com/sw1iJvL.gif)
 
-### :two: Keyword Search
+### :two: **Keyword Search**
 
-![Imgur](https://i.imgur.com/CjU0ujJ.gif)
+User can search the attraction by insert keywords.
 
-### :three: Member System
+使用者可以使用關鍵字搜尋景點。
 
-![Imgur](https://i.imgur.com/ld5l0Px.gif)
+![Imgur](https://i.imgur.com/0N3MNjt.gif)
 
-### :four: View Attractions
+### :three: **Member System**
 
-![Imgur](https://i.imgur.com/sOOXvam.gif)
+The user needs to become a member to use the function of booking itinerary and payment.
 
-### :five: Scheduled Route
+使用者需要成為會員才可以使用預約行程與付款的功能。
 
-![Imgur](https://i.imgur.com/EXg53T8.gif)
+![Imgur](https://i.imgur.com/RXL4dc3.gif)
+
+### :four: **View Attractions**
+
+To click the attraction at the homepage, user can get the detail of attractions which was provided picture slide show.
+
+點選首頁的景點圖片可以看到更多資訊，景點圖片以輪播方式呈現。
+
+![Imgur](https://i.imgur.com/RJklZ40.gif)
+
+### :five: **Scheduled Route**
+
+Use TapPay to connect to a third-party cash flow system. After the credit card is successfully authenticated, the user completes the payment.
+
+使用 TapPay 串接第三方金流系統，信用卡認證成功後，使用者完成付款。
+
+![Imgur](https://i.imgur.com/XcvRztO.gif)
 
 ### :six: Responsive Web Design
 
