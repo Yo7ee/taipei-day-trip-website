@@ -44,7 +44,7 @@ After the weekly development is completed, will sent Pull Request to the Reviewe
 
 ### :one: Lazy Loading & Infinite Scroll
 
-![Imgur](https://i.imgur.com/bR8KxGJ.gif)
+![Imgur](https://i.imgur.com/sw1iJvL.gif)
 
 ### :two: Keyword Search
 
