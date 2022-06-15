@@ -6,12 +6,12 @@
 - [Skills Structure](#skills-structure)
 - [RESTful API](#restful-api)
 - [Features](#features)
-  - [#1 Lazy Loading & Infinite Scroll](#one-lazy-loading--infinite-scroll)
-  - [#2 Keyword Search](#two-keyword-search)
-  - [#3 Member System](#three-member-system)
-  - [#4 View Attractions](#four-view-attractions)
-  - [#5 Scheduled Route](#five-schduled-route)
-  - [#6 Responsive Web Design](#six-responsive-web-design)
+  - [#1 Lazy Loading & Infinite Scroll](#-one-lazy-loading--infinite-scroll)
+  - [#2 Keyword Search](#-two-keyword-search)
+  - [#3 Member System](#-three-member-system)
+  - [#4 View Attractions](#-four-view-attractions)
+  - [#5 Scheduled Route](#-five-schduled-route)
+  - [#6 Responsive Web Design](#-six-responsive-web-design)
 
 ## Live Demo
 
