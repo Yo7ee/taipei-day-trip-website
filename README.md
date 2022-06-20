@@ -1,5 +1,9 @@
 # Taipei day trip 台北一日遊
 
+Taipei Trip is a travel e-commerce website. With more than 50 attractions information, click on the photos of the attractions to view more information, and make reservations and payment.
+
+台北一日遊是一個旅遊電商網站。擁有超過 50 筆的景點資料，點擊景點資照片可以訊查看看更多資訊，並預約行程、付款。
+
 ## Catalog
 
 - [Live Demo](#live-demo)
