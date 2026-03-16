@@ -21,13 +21,15 @@ Taipei Trip is a travel e-commerce website. With more than 50 attractions inform
 
 ~~http://3.224.188.5:3000/~~
 
-**Test Account**</br>
+**Test Account**
+
 | - | - |
 |----|----|
 |Account|123@gmail.com|
 |Password|123|
 
-**Credit Card for Test**</br>
+**Credit Card for Test**
+
 | - | - |
 |----|----|
 |Card Number|4242 4242 4242 4242|
